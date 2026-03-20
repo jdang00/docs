@@ -1,0 +1,263 @@
+---
+title: "Live data and reactivity"
+description: "How LearnTerms delivers real-time updates across the app using Convex subscriptions, and what that means for students, admins, and the platform's future."
+---
+
+## What "live" means in LearnTerms
+
+LearnTerms is not a static app that fetches data on page load and waits for you to refresh. Every query the app makes against Convex is a **live subscription**. When the underlying data changes — because a student answered a question, a curator published new content, or an admin reassigned a role — every client displaying that data sees the update immediately, without polling, without manual refresh, and without any additional code on the frontend.
+
+This is not a bolt-on feature. It is the default behavior of every data read in the application. There is no "live mode" toggle. There is no special API for real-time versus non-real-time queries. The entire app is live, all the time.
+
+## Why this matters for a study platform
+
+Most study tools treat data as something you fetch once and display. A student loads their flashcards, takes a quiz, and sees results. If the instructor changes something, the student has to reload. If another student flags a question, nobody sees it until they navigate away and come back.
+
+LearnTerms operates differently because the domain demands it:
+
+- **Admins monitoring cohort progress** need to see completion percentages update as students work through modules during a study session. Stale data on a progress dashboard defeats the purpose of having one.
+- **Students studying a module** benefit from seeing their progress stats reflect the work they just did without navigating away. If a student masters a question, the module progress bar should move immediately.
+- **Curators authoring questions** need to see their changes reflected instantly. If a curator adds a question to a module, the module's question count should update without a page reload — both for the curator and for any student currently viewing that module.
+- **Badge and achievement systems** lose their motivational value if a student earns a badge but doesn't see it until they refresh. The badge engine runs server-side on every progress mutation, and the award appears on the client as soon as it's written to the database.
+- **PDF processing pipelines** that chunk documents for AI generation run asynchronously on the server. The admin who triggered the job sees progress updates (chunks processed, current step, completion) in real time, streamed through the same subscription mechanism as everything else.
+
+## How Convex makes this work
+
+### The subscription model
+
+Convex's query system is built on persistent WebSocket connections. When the frontend calls `useQuery`, the following happens:
+
+1. The client sends the query function name and its arguments to the Convex server over an open WebSocket.
+2. The server executes the query function, reads from the database, and returns the result.
+3. The server **tracks which database tables and indexes that query touched** during execution.
+4. When any mutation writes to those tables or affects those index ranges, the server re-executes the query function automatically.
+5. If the result differs from the last result sent to the client, the server pushes the new result down the WebSocket.
+6. The client's reactive framework (Svelte 5's rune system) picks up the new value and re-renders affected components.
+
+This is not polling on an interval. It is not a diff of the entire database. Convex tracks dependencies at the query level and only re-runs queries whose dependencies were touched by a mutation. A mutation to the `badges` table does not cause a re-execution of a query that only reads from `question`.
+
+### What the frontend code actually looks like
+
+The `convex-svelte` library provides a `useQuery` hook that returns an object with `data`, `isLoading`, and `error` properties. The Svelte component declares it and renders from it:
+
+```typescript
+const cohortStats = useQuery(api.progress.getCohortProgressStats, {
+  cohortId: userData.cohortId
+});
+```
+
+That single line does everything: initial fetch, WebSocket subscription, automatic re-fetch on server-side data changes, and cleanup when the component unmounts. There is no `useEffect` for polling. There is no `refetchInterval`. There is no event bus listening for "data changed" messages. The query is live by default.
+
+When the arguments to a query are reactive (they depend on component state), `useQuery` accepts a function that returns the arguments:
+
+```typescript
+const userStats = useQuery(api.progress.getUserModuleStats, () => ({
+  userId: selectedStudentId,
+  cohortId: userData.cohortId
+}));
+```
+
+If `selectedStudentId` changes (the admin clicks a different student row), the old subscription is torn down and a new one is created for the new argument set. The transition is seamless.
+
+### Conditional queries with skip
+
+Not every query should fire immediately. If the data required to build the query arguments is not yet available (e.g., the user hasn't loaded yet), the query can be skipped:
+
+```typescript
+const classes = useQuery(
+  api.class.getUserClasses,
+  () => userData?.cohortId ? { id: userData.cohortId } : 'skip'
+);
+```
+
+Passing `'skip'` tells the client to not open a subscription until the dependency is available. This prevents wasted queries against the server and avoids errors from passing `undefined` as an argument.
+
+### Mutations and the write path
+
+Mutations in Convex are transactional. When a student saves progress on a question, the mutation:
+
+1. Reads the existing `userProgress` record (if any) for that user and question.
+2. Creates or updates the record with the new selected options, eliminated options, and flag state.
+3. Updates the denormalized `flagCount` on the question if the flag status changed.
+4. Calls the badge engine, which updates `userBadgeMetrics` and potentially creates a `userBadgeAwards` record.
+5. Commits all of those writes atomically.
+
+Once the mutation commits, Convex's subscription system identifies every active query that touched any of the affected tables and index ranges. Those queries re-execute. Every client with a live subscription to affected data sees the update.
+
+This means that when a single student answers a single question:
+- That student's module progress bar updates.
+- The admin's cohort progress dashboard updates (the student's row shows a new completion percentage).
+- The admin's "top flagged questions" list updates if the student flagged or unflagged the question.
+- The student's badge count updates if the answer triggered a badge rule.
+- Any other student viewing the same module's aggregate stats sees the flagCount change on that question.
+
+All of this happens within the same mutation → subscription → re-render cycle. No orchestration code. No event emitters. No message queues.
+
+## Where live data appears in the product
+
+### Student module study
+
+The primary study interface at `/classes/[classId]/modules/[moduleId]` subscribes to module data, question data, and user progress. As the student works through questions:
+
+- Their selected and eliminated options are saved via mutation after each interaction.
+- The progress bar at the top of the module reflects the current state of `userProgress` records for that module.
+- If another student flags the same question, the flag count on that question updates in real time, visible to curators viewing the question list.
+
+Progress saves use an optimistic update pattern. The Svelte component state updates immediately when the student selects an answer:
+
+```typescript
+qs.selectedAnswers = [...selectedOptions];
+qs.eliminatedAnswers = [...eliminatedOptions];
+```
+
+Then the mutation fires in the background. If the mutation succeeds, the server-side state matches the optimistic state. If it fails, error handling can revert the UI. In practice, Convex mutations rarely fail because they run in a managed environment with automatic retries for transient errors.
+
+### Admin progress dashboard
+
+The admin progress page at `/admin/progress` subscribes to two primary queries:
+
+- `getCohortProgressStats` returns aggregate numbers: total students, total questions, total modules, and average completion percentage across the cohort.
+- `getStudentsWithProgress` returns a list of every student in the cohort with their individual progress statistics.
+
+Both queries re-execute whenever any student in the cohort saves progress. The admin sees numbers move in real time during active study sessions. There is no "refresh" button on this page because there is nothing to refresh.
+
+The admin can click a student row to open a detail modal, which subscribes to `getUserModuleStats` for that specific student. This query returns a per-class, per-module breakdown of the student's progress. If the student is actively studying while the admin is watching, the modal updates live.
+
+### Custom quiz system
+
+The custom quiz system at `/classes/[classId]/tests/new` uses mutations for every step of the quiz lifecycle:
+
+- `startQuizAttempt` creates the attempt record and returns a seed for deterministic question ordering.
+- `recordAnswer` persists each answer as the student works through the quiz.
+- `submitQuizAttempt` calculates scores and writes the result summary.
+
+Each of these mutations triggers subscription updates. An admin viewing the progress dashboard can see a student's stats change in real time as they submit a quiz. The quiz history page for the student updates immediately after submission without requiring navigation.
+
+Quiz attempts use a `status` field (`in_progress`, `submitted`, `timed_out`, `abandoned`) that is live-queryable. If an admin wanted to build a view of "currently active quizzes," they could query by status and see attempts appear and disappear in real time as students start and finish quizzes.
+
+### Badge engine
+
+The badge system evaluates rules after every progress mutation. When a student crosses a threshold (e.g., mastering 50 questions, maintaining a 7-day study streak), the badge engine:
+
+1. Updates `userBadgeMetrics` with the new aggregate values.
+2. Evaluates all badge rules applicable to the student's scope (global, cohort, or class).
+3. Creates a `userBadgeAwards` record if a new badge is earned.
+
+Because these writes happen inside the same mutation transaction as the progress save, the badge award is visible to the student on their next render cycle. The cohort leaderboard, which queries badge awards, also updates for every student viewing it.
+
+### PDF processing pipeline
+
+When an admin uploads a PDF to the content library, the processing pipeline runs as a Convex action (server-side, outside the transaction):
+
+1. The PDF is fetched from UploadThing and sent to Gemini for chunking.
+2. Each chunk is written to the `chunkContent` table via a mutation.
+3. The `pdfProcessingJobs` record is updated with progress after each chunk.
+4. The admin's UI subscribes to the job record and shows a live progress indicator.
+
+This is a multi-step async process that can take minutes for large PDFs, but the admin sees every step reflected in real time: "Processing chunk 3 of 12," then "Processing chunk 4 of 12," and so on. No polling. The same subscription mechanism that powers instant quiz updates also powers long-running background job monitoring.
+
+## Denormalization and why it matters for live performance
+
+Convex queries re-execute when their dependencies change. A naive query that counts every `userProgress` record in a cohort to calculate average completion would re-execute on every single progress save by every student. For a cohort of 200 students with 2,000 questions, that query would touch hundreds of thousands of records on every re-execution.
+
+LearnTerms avoids this by denormalizing aggregate statistics:
+
+- **`users.progressStats`** stores `questionsInteracted`, `questionsMastered`, and `totalQuestions` directly on the user record. Progress queries read these fields instead of counting `userProgress` records.
+- **`cohort.stats`** stores `totalStudents`, `totalQuestions`, `totalModules`, and `averageCompletion` on the cohort record. The admin dashboard reads these directly.
+- **`module.questionCount`** stores the number of questions in a module. Incremented on question creation, decremented on deletion.
+- **`question.flagCount`** stores how many students have flagged a question. Incremented and decremented in the `saveUserProgress` mutation.
+
+This denormalization is not a performance hack layered on top of the system. It is a deliberate architectural choice that makes live queries practical. Without it, every subscription update would trigger expensive aggregation queries. With it, each query reads a small number of pre-computed fields and re-executes quickly.
+
+The tradeoff is write-time complexity. Every mutation that changes progress must also update the denormalized fields. LearnTerms handles this inside the same transaction, so the denormalized values are always consistent with the source data.
+
+## Indexes and query efficiency
+
+Convex uses indexes to make queries fast and to narrow the scope of subscription dependencies. LearnTerms defines composite indexes on most tables:
+
+- `by_user_question` on `userProgress` enables O(1) lookup for "does this student have progress on this question."
+- `by_user_class` on `userProgress` enables range queries for "all progress records for this student in this class."
+- `by_moduleId_order` on `question` enables sorted retrieval of questions within a module.
+- `by_moduleId_flagCount` on `question` enables the "top flagged questions" query to read only the questions with the highest flag counts.
+
+These indexes also affect subscription granularity. A query that uses `by_user_class` to read progress for a single student in a single class will only re-execute when mutations affect that specific user-class combination — not when any student in any class saves progress.
+
+## What the frontend does not manage
+
+Because Convex handles subscriptions, cache invalidation, and state synchronization, the frontend does not need:
+
+- **A state management library.** There is no Redux, Zustand, or Pinia. Svelte stores exist for UI-only state (toast notifications, theme preferences), but all server data flows through `useQuery` subscriptions.
+- **Manual cache invalidation.** When a mutation writes data, all affected queries update automatically. There is no `queryClient.invalidateQueries()` call. There is no stale-while-revalidate configuration. The cache is always consistent because Convex manages it.
+- **Polling or refetch intervals.** No `setInterval` fetching data every 5 seconds. No `refetchOnWindowFocus`. The WebSocket connection delivers updates as they happen.
+- **Optimistic update rollback infrastructure.** Convex mutations in a managed environment have high reliability. The app uses optimistic UI updates (setting Svelte state before the mutation returns) but does not build elaborate rollback mechanisms because mutation failures are rare.
+
+This is a meaningful reduction in frontend complexity. A typical React or Svelte app with REST APIs or even GraphQL subscriptions would need libraries and patterns to handle all four of these concerns. LearnTerms needs none of them because the data layer handles it.
+
+## Current limits
+
+### Convex query re-execution cost
+
+Every live query has a computational cost. If 200 students are on the progress dashboard simultaneously, each with a subscription to `getCohortProgressStats`, and one student saves progress, that query re-executes 200 times (once per subscriber). The query itself is fast (it reads denormalized fields), but the aggregate load scales with the number of concurrent subscribers multiplied by the mutation rate.
+
+For LearnTerms' current cohort sizes (optometry school classes), this is well within Convex's capacity. For a platform with tens of thousands of concurrent users, the subscription fan-out could become a bottleneck.
+
+### No partial updates
+
+Convex subscriptions send the full query result on every update, not a diff. If `getStudentsWithProgress` returns a list of 200 students and one student's progress changes, the entire list is re-sent to every subscriber. For small result sets, this is negligible. For large result sets with frequent updates, the bandwidth cost adds up.
+
+LearnTerms mitigates this with query design: admin analytics queries use pagination (`limit` and `offset` parameters), and student-facing queries are scoped to the current module or class, keeping result sets small.
+
+### Offline and poor connectivity
+
+Convex's WebSocket connection requires an active network connection. If a student loses connectivity mid-study, in-flight mutations will fail and pending subscription updates will not arrive. The app does not currently implement offline-first patterns like local-first databases or service workers for offline mutation queuing.
+
+For the target use case (students studying on campus or at home with stable internet), this is acceptable. For a mobile app used in areas with unreliable connectivity, this would need addressing.
+
+### No server-sent events or webhook-style push
+
+Convex's real-time model is client-pull via subscriptions, not server-push via events. There is no way to say "when a badge is earned, push a notification to the student's phone." Notifications, if ever built, would need to be implemented outside Convex (e.g., via a separate push notification service triggered by a Convex action).
+
+### Write contention on hot records
+
+Denormalized counters like `module.questionCount` and `question.flagCount` are updated by mutations from many different users. In Convex, mutations that write to the same document are serialized. If 50 students flag the same question simultaneously, those 50 mutations execute sequentially, not in parallel. For the current user base, this serialization is imperceptible. At scale, hot counters could introduce latency.
+
+## Future capabilities
+
+### Real-time collaborative study sessions
+
+The subscription infrastructure already supports multi-user reactivity. A "study room" feature where multiple students work through the same module simultaneously — seeing each other's progress, discussing flagged questions, or competing on speed — would require new queries and UI, but no new real-time infrastructure. The same `useQuery` subscriptions that power the admin dashboard would power collaborative views.
+
+### Live instructor-led sessions
+
+An instructor could project a dashboard showing real-time cohort performance during a review session. As students answer questions on their devices, the instructor's screen updates live. This is already possible with the existing admin progress dashboard; a dedicated "session mode" view would be a UI-only addition.
+
+### Presence and activity indicators
+
+Convex can store ephemeral state (e.g., "user X is currently viewing module Y") in a table and subscribe to it. This would enable "who's studying right now" indicators on the dashboard, typing indicators in future discussion features, or live cursor positions in a collaborative question editor.
+
+### Granular subscription scoping
+
+As cohort sizes grow, queries like `getStudentsWithProgress` could be split into per-page subscriptions, where each page of the student list is a separate query with a separate subscription scope. This would reduce the re-execution cost when a single student's data changes, because only the query for the page containing that student would re-execute.
+
+### Convex components and the ecosystem
+
+Convex's component model (`convex.config.ts`) already integrates third-party modules like `@convex-dev/polar` for subscription billing and `@convex-dev/rate-limiter` for usage limits. As the Convex ecosystem grows, LearnTerms can adopt components for notifications, presence, search, and analytics without changing the core subscription model.
+
+### Edge caching for read-heavy queries
+
+Some queries (e.g., the list of classes in a cohort, the list of modules in a class) change infrequently but are read by every student. Convex could introduce edge caching for queries with low mutation rates, reducing latency for geographically distributed users. This is a platform-level improvement that LearnTerms would benefit from automatically.
+
+## How this compares to traditional architectures
+
+In a traditional REST or GraphQL architecture, building the same live experience would require:
+
+1. **A WebSocket server** (Socket.io, Pusher, Ably) running alongside the API server.
+2. **Event emission logic** in every mutation that publishes "data changed" events to the WebSocket layer.
+3. **Channel management** to ensure clients subscribe to the right events for the data they're displaying.
+4. **Cache invalidation logic** on the frontend to refetch or update cached data when events arrive.
+5. **Reconnection handling** for dropped WebSocket connections.
+6. **Consistency guarantees** between the REST API response and the WebSocket event (race conditions where a query returns stale data because the event hasn't fired yet).
+
+Convex collapses all six of these concerns into a single primitive: the query subscription. This is not a minor convenience. It is a structural simplification that removes entire categories of bugs (stale cache, missed events, subscription leaks) and entire categories of infrastructure (WebSocket servers, event buses, cache layers).
+
+The tradeoff is vendor coupling. LearnTerms' real-time behavior is inseparable from Convex. Migrating to a different database would require rebuilding the subscription system from scratch. For a product at LearnTerms' stage and scale, this tradeoff is favorable — the development velocity gained from not building real-time infrastructure outweighs the migration risk.
