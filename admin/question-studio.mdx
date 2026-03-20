@@ -1,0 +1,96 @@
+---
+title: "Question Studio"
+description: "Generate questions from source material and send them into the right LearnTerms module."
+---
+
+## What Question Studio does
+
+Question Studio is the generation surface for admins and contributors. It lets you choose a semester, class, and module, pull source material from the Content Library, generate questions with a LearnTerms model, review the output, and bulk insert selected questions into the chosen module.
+
+It is not a free-form chatbot. It is a structured generation workflow.
+
+## Destination comes first
+
+The first part of the screen asks you to choose where generated questions should go:
+
+1. Semester
+2. Class
+3. Module
+
+This ordering matters because LearnTerms generation is not useful without a destination. The app is designed to place generated questions directly into a module, not leave them floating in a detached draft space.
+
+## Source material selection
+
+Question Studio works with selected text. In practice, that usually comes from chunks in the Content Library.
+
+The built-in document browser lets you:
+
+- browse cohort-scoped documents
+- search by title
+- open a document
+- select chunk text to feed into generation
+
+The selected text is then summarized into character and word counts on the generation panel.
+
+## Generation controls
+
+Current generation controls include:
+
+- product model selection
+- question count of `5`, `10`, or `15`
+- optional custom prompt
+
+The product-facing model options currently are:
+
+- `swift-general`
+- `swift-optometry`
+- `swift-pharmacy`
+
+All of them currently resolve to the same underlying model with different focus settings. The product docs should explain the product meaning, not just the backend mapping.
+
+## Source-text quality
+
+The generation panel explicitly tracks character count and gives rough quality feedback based on the amount of selected text.
+
+Current behavior treats:
+
+- empty text as unusable
+- very short text as low quality
+- very large text as over the preferred cap
+
+The current soft cap shown in the component is `3500` characters.
+
+This is worth documenting because a lot of “bad generation” is actually a source-material problem.
+
+## Reviewing generated output
+
+After generation, the user can:
+
+- inspect the generated questions
+- select which ones to keep
+- remove individual questions
+- discard the whole batch
+- regenerate from the same source
+- add only selected questions to the destination module
+
+This review step is important. Generated output is meant to accelerate authoring, not replace editorial judgment.
+
+## Limits and errors
+
+Question generation can fail for several operational reasons:
+
+- no destination module is selected
+- no source material is selected
+- usage limits are reached
+- module limits are reached when saving
+
+The UI distinguishes between ordinary errors and daily-limit style errors, which is useful to explain in contributor docs.
+
+## Recommended workflow
+
+1. Clean the source chunks first
+2. Choose the exact destination module
+3. Pick the model that matches the subject matter
+4. Generate a smaller batch first
+5. Select only the questions worth keeping
+6. Edit weak questions after insertion rather than accepting them blindly

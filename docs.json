@@ -27,26 +27,42 @@
             "pages": [
               "index",
               "onboarding",
-              "quickstart",
-              "development"
+              "platform/architecture-and-data-model"
             ]
           },
           {
             "group": "Students",
             "pages": [
-              "students/study-flow"
+              "students/classes-and-modules",
+              "students/study-flow",
+              "students/custom-tests"
             ]
           },
           {
             "group": "Admins",
             "pages": [
-              "admin/content-library"
+              "admin/admin-dashboard",
+              "admin/content-library",
+              "admin/question-studio"
             ]
           },
           {
-            "group": "AI",
+            "group": "Contributors",
             "pages": [
-              "ai/learnterms-models"
+              "contributors/question-authoring"
+            ]
+          },
+          {
+            "group": "Platform",
+            "pages": [
+              "platform/roles-and-permissions"
+            ]
+          },
+          {
+            "group": "Docs Site",
+            "pages": [
+              "quickstart",
+              "development"
             ]
           }
         ]

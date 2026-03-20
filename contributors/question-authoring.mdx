@@ -1,0 +1,102 @@
+---
+title: "Question authoring"
+description: "How to write, structure, and attach high-quality questions in LearnTerms."
+---
+
+## What a question record contains
+
+At the data-model level, a LearnTerms question includes:
+
+- `moduleId`
+- `order`
+- `type`
+- `stem`
+- `options`
+- `correctAnswers`
+- optional `explanation`
+- `aiGenerated`
+- `status`
+- optional author metadata
+
+This means a question is more than just prompt text. It is a structured object that has to behave correctly in study mode, generation workflows, search, and test assembly.
+
+## Supported question types
+
+The shared type definitions currently include:
+
+- `multiple_choice`
+- `true_false`
+- `fill_in_the_blank`
+- `matching`
+
+Not every UI surface exposes every type equally, but contributors should still understand the full supported model.
+
+## Writing a strong stem
+
+A strong LearnTerms stem should:
+
+- ask one clear thing
+- avoid unnecessary ambiguity
+- stay tied to module-specific source material
+- support a rationale that teaches, not just confirms correctness
+
+If a question cannot be explained cleanly after the answer is revealed, it usually needs revision.
+
+## Options and correct answers
+
+Options are stored as structured entries with IDs and text. Correct answers are stored separately as an array of option IDs or matching tokens, depending on question type.
+
+For contributors, that means:
+
+- options must be distinct enough to evaluate reliably
+- answer IDs matter, not just displayed order
+- matching questions require more care because the evaluation model is more complex than a simple single-answer check
+
+## Explanations
+
+The explanation field is optional in the schema, but in practice it is highly valuable.
+
+Good explanations should:
+
+- explain why the correct answer is correct
+- explain why likely distractors are wrong when helpful
+- reinforce the module concept rather than restating the stem
+
+If LearnTerms is going to be more useful than rote memorization, explanations are one of the main reasons.
+
+## AI-generated vs manually authored
+
+Questions can be marked as `aiGenerated`, but that flag should not be treated as a quality badge. It is provenance, not proof.
+
+Generated questions should still be reviewed for:
+
+- factual correctness
+- curriculum relevance
+- clarity
+- answerability
+- alignment with the source material
+
+## Media attachments
+
+Question media is supported through a dedicated `questionMedia` table.
+
+Current rules include:
+
+- images only
+- `8MB` maximum size
+- optional alt text and caption
+- optional `showOnSolution` behavior
+
+That last flag matters. Some images should be visible only after the student answers, especially when the media would otherwise give away the result too early.
+
+## Status and curation expectations
+
+Questions also carry a `status`, which makes it possible to distinguish between material that is ready for students and material that still needs review.
+
+Contributors should treat question writing as curation, not just entry:
+
+1. verify the source
+2. write clearly
+3. attach media only when it improves understanding
+4. include explanation when possible
+5. place the question in the correct module

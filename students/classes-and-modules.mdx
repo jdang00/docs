@@ -1,0 +1,75 @@
+---
+title: "Classes and modules"
+description: "How students move from the main dashboard into the right class and module."
+---
+
+## What the dashboard is for
+
+The student dashboard is the main entry point for day-to-day use. Its job is to help you find the right class quickly, surface your recent activity, and route you into focused study rather than making you browse a generic content library.
+
+In the code, class access is already scoped to the user cohort. That means the dashboard should only show classes that are relevant to the group you belong to.
+
+## How classes are organized
+
+Each class belongs to:
+
+- a cohort
+- a semester
+- a code
+- an order value that controls display order
+
+This means LearnTerms is not just listing random courses. It is presenting a semester-aware, cohort-specific course set.
+
+## What students see on a class card
+
+The class view is designed to answer a few practical questions quickly:
+
+- What class am I in?
+- Which module should I study next?
+- How much progress have I made?
+- What should I resume?
+
+Depending on the current app state, students may also see recent module activity or quick routes back into in-progress work.
+
+## Entering a class
+
+Once a student selects a class, LearnTerms switches from the class list into the module list for that class. That transition matters because the rest of the study experience becomes class-scoped:
+
+- module queries are filtered by class ID
+- custom tests are built for a specific class
+- tags are class-scoped
+- question generation destinations are module-scoped
+
+## How modules are used
+
+A module is the unit of actual study. Each module has:
+
+- a title
+- a description
+- an order
+- a status
+- an optional emoji
+- a question count
+
+Students should think of modules as the practical study unit, not just a folder. Module-level progress is what the app uses to make studying resumable and measurable.
+
+## Why modules matter
+
+Modules are where LearnTerms becomes useful. They let the app:
+
+- keep practice sets smaller and more focused
+- track progress in a way that matches course organization
+- support targeted custom tests
+- attach generated questions to the right study destination
+
+## Good student workflow
+
+For most students, the best default path is:
+
+1. Open the dashboard
+2. Enter the right class
+3. Pick one module
+4. Finish a clean first pass
+5. Revisit flagged or incomplete questions
+
+That path fits the way the app is built. It uses the existing class and module structure instead of fighting it.

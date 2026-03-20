@@ -3,46 +3,67 @@ title: "Onboarding"
 description: "Understand how LearnTerms is organized and how a cohort gets started."
 ---
 
-## What LearnTerms is
+## What LearnTerms is built around
 
-LearnTerms is a collaborative study platform built around the way a cohort actually learns together.
+LearnTerms is designed around a shared academic structure rather than individual decks or notebooks. Instead of asking every student to build their own study system from scratch, LearnTerms gives the cohort a common framework for organizing classes, modules, source documents, and questions.
 
-At its core, LearnTerms is three things:
+At a high level, LearnTerms is three things:
 
-1. A shared study space for your cohort
-2. An AI-assisted question creation system for contributors and admins
+1. A shared study space for the cohort
+2. An admin and contributor workflow for building study content
 3. A growing question bank organized by semester, class, and module
 
 ## Join your cohort
 
-To get into the right shared workspace, you need your cohort join code.
+To enter the right study space, you need the join code for your cohort. The cohort determines which classes, modules, documents, and questions you can access.
 
 1. Open the LearnTerms join flow.
 2. Enter the code your cohort was given.
 3. Confirm the class details before joining.
 
-Once you join, LearnTerms can show you the classes, modules, and study material tied to that cohort.
+Once you join, LearnTerms can show you the classes and modules scoped to that cohort. That scoping matters throughout the app. The class list, module list, admin tools, and document library all depend on it.
 
 ## How the product is organized
 
-LearnTerms is intentionally opinionated about structure:
+The app data model is intentionally opinionated:
 
-- A `cohort` groups the people studying together
-- A `class` represents a course
-- A `module` breaks a class into study units
-- A `question` belongs to the module you practice
+- A `school` is the top-level institution
+- A `cohort` groups a class year or study group inside that school
+- A `semester` helps organize courses across time
+- A `class` represents a course inside the cohort
+- A `module` breaks a class into smaller study units
+- A `question` belongs to a module
+- `tags` can group module content inside a class
+- `content library` documents and chunks give admins source material for question writing
 
-That structure keeps studying focused. You do not need to build your own system before you begin.
+This structure keeps the app relevant to the actual curriculum. Students do not need to guess how to organize their material because the platform already mirrors the course hierarchy.
 
 ## What you see first
 
-After onboarding, most users work from a dashboard that centers on:
+After onboarding, most users spend their time in a few main areas:
 
 - Current classes
 - Module progress
 - Quick access to studying
-- Admin tools, if your role allows them
+- Custom tests
+- Admin tools, if their role allows them
 
-<Tip>
-  If you are migrating older in-app docs, this page should stay high-level. Put step-by-step product workflows on the student and admin pages.
-</Tip>
+If you are a student, the main path is usually:
+
+1. Open your classes
+2. Enter a class
+3. Select a module
+4. Study questions or build a custom test
+
+If you are a curator, admin, or dev, you also get access to admin routes for content management and question generation.
+
+## Roles matter early
+
+Not everyone sees the same surface area of the product.
+
+- Students primarily consume class and module content
+- Curators can work with admin-side content tools
+- Admins can manage more of the cohort-side operational flow
+- Devs can manage everything, including role changes that other admins cannot perform
+
+The exact role rules are documented in the permissions guide, but it is useful to understand upfront that LearnTerms is not a flat-permission app.

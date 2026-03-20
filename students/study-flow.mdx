@@ -1,21 +1,34 @@
 ---
-title: "Study flow"
-description: "How students move through module practice in LearnTerms."
+title: "Studying a module"
+description: "How module practice works in LearnTerms from first question to saved progress."
 ---
 
 ## Start a module
 
-To begin studying:
+When you open a module, LearnTerms loads the question set for that module and pulls in your saved progress for those questions.
+
+The first step is simple:
 
 1. Open a class.
 2. Select a module.
-3. Use the sidebar progress and question navigation to move through the set.
+3. Begin working through questions one at a time.
 
-LearnTerms is built around one question at a time. That keeps your attention on recall instead of interface noise.
+LearnTerms is intentionally built around one-question-at-a-time practice. The goal is to preserve focus and reduce UI noise while still letting you move quickly.
+
+## What the study screen tracks
+
+The module screen keeps more state than a basic flashcard loop. For each question, LearnTerms can persist:
+
+- The answer options you selected
+- The options you eliminated while reasoning
+- Whether you flagged the question
+- Whether the question counts as interacted
+
+That state is saved against your user progress record, not just in the browser. If you leave and come back, LearnTerms can restore what you were doing.
 
 ## Answering questions
 
-Each question presents a stem and answer options below it.
+Each question displays the stem and answer options for the current item. Depending on the question type, you may be choosing a single answer, multiple answers, filling blanks, or matching prompts and answers.
 
 - Select the option or options you think are correct.
 - Eliminate distractors when you want to narrow the field without committing yet.
@@ -23,21 +36,35 @@ Each question presents a stem and answer options below it.
 
 ## Feedback and review
 
-After checking an answer, LearnTerms helps you correct quickly:
+After you check an answer, LearnTerms shifts from recall mode into feedback mode.
 
 - Correct answers are highlighted
 - You can clear a selection and try again
 - You can flag a question to revisit later
 - Rationales can be revealed when they are available
 
+This loop is meant to be fast. You should be able to answer, verify, correct, and move on without reopening menus or losing your place.
+
 ## Navigation controls
 
-The study screen is designed to support fast repetition without losing context.
+The module study screen supports both sequential practice and targeted review.
 
 - Jump between questions from the top navigation
 - Move with previous and next controls
 - Shuffle when you want less order-based memorization
 - Watch your progress in the sidebar as you work
+
+The app also supports filters for flagged and incomplete questions. Those filters are useful when you want to turn a large module into a focused second-pass review.
+
+## Progress behavior
+
+Progress in LearnTerms is more than just a completion bar.
+
+- `interacted` questions track where you have actually worked
+- `flagged` questions help you revisit weak spots
+- saved selections let you resume without redoing work
+
+At the module level, the app queries your progress across the full module question set and uses that to hydrate counts and filters. That is what makes the module feel continuous across sessions.
 
 ## Why the flow is designed this way
 
@@ -51,3 +78,4 @@ The study screen is designed to support fast repetition without losing context.
 - Use flags for questions you want to revisit before an exam.
 - Shuffle once you know the material well enough to avoid memorizing order.
 - Review rationales after answering instead of before to preserve recall.
+- Use incomplete filtering when you want to finish untouched questions before reviewing flagged ones.

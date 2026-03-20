@@ -4,49 +4,58 @@ description: "Guides for students, contributors, and admins using LearnTerms."
 ---
 
 <Tip>
-  These docs are the new external home for LearnTerms guidance as content moves out of the in-app docs.
+  These docs are the external home for LearnTerms guidance as the product documentation moves out of the in-app docs.
 </Tip>
 
-## Built for focused studying
+## Start with the real product
 
-LearnTerms is a cohort-based study platform designed to help you spend less time organizing and more time learning. The product keeps classes, modules, questions, and progress tightly connected so every study session stays relevant to the material you actually need to know.
+LearnTerms is a cohort-based study platform. It organizes material by cohort, semester, class, and module so your study time stays tied to the questions your group actually needs.
 
-The docs follow that same principle. Start with onboarding and local setup, then move into the workflows you use most: studying modules, managing content, and generating questions from source material.
+These docs follow that structure. Start with the onboarding and architecture pages if you need orientation, then move into the student, admin, or contributor workflow that matches what you are doing.
 
 <CardGroup cols={2}>
   <Card title="Onboarding" icon="rocket" href="/onboarding">
-    Learn how LearnTerms is organized and how a cohort gets started.
+    Understand how LearnTerms is structured and how a cohort gets started.
   </Card>
-  <Card title="Preview the docs" icon="rectangle-terminal" href="/development">
-    Run the Mintlify preview locally before you push any changes.
+  <Card title="Architecture" icon="diagram-project" href="/platform/architecture-and-data-model">
+    See how the app, auth, database, uploads, and AI pipeline fit together.
   </Card>
-  <Card title="Study flow" icon="book-open" href="/students/study-flow">
-    See how module practice works from question answering to review.
+  <Card title="Study modules" icon="book-open" href="/students/study-flow">
+    Learn how saved progress, flags, rationale, and filters work during practice.
   </Card>
-  <Card title="Content Library" icon="folder-open" href="/admin/content-library">
-    Manage PDFs, chunks, and admin-side source content.
+  <Card title="Question Studio" icon="sparkles" href="/admin/question-studio">
+    Generate questions from source content and send them into modules.
+  </Card>
+</CardGroup>
+
+## Main guides
+
+<CardGroup cols={2}>
+  <Card title="Classes and modules" icon="graduation-cap" href="/students/classes-and-modules">
+    Move from your dashboard into the class and module you want to study.
+  </Card>
+  <Card title="Custom tests" icon="clipboard-check" href="/students/custom-tests">
+    Build targeted tests using modules, filters, timing, and question-type settings.
+  </Card>
+  <Card title="Content Library" icon="folder-tree" href="/admin/content-library">
+    Upload PDFs, review chunks, and keep source material clean for generation.
+  </Card>
+  <Card title="Question authoring" icon="pen-to-square" href="/contributors/question-authoring">
+    Understand supported question shapes, media rules, and authoring expectations.
+  </Card>
+  <Card title="Roles and permissions" icon="shield-halved" href="/platform/roles-and-permissions">
+    See what students, curators, admins, and devs can do in the app.
+  </Card>
+  <Card title="Docs development" icon="rectangle-terminal" href="/development">
+    Preview the Mintlify site locally before you push docs changes.
   </Card>
 </CardGroup>
 
-## What belongs here
+## What these docs cover
 
-These docs should explain the real LearnTerms product as it exists in the app:
+The goal of this site is to document the shipped LearnTerms product as it exists today:
 
-- Student workflows like classes, modules, tests, and progress
-- Admin workflows like content ingestion, question curation, and cohort management
-- AI-assisted workflows like chunking and LearnTerms generation models
-- Local development and docs contribution guidance for the Mintlify site
-
-## Current migration priorities
-
-<CardGroup cols={3}>
-  <Card title="Students" icon="graduation-cap" href="/students/study-flow">
-    Document the day-to-day study experience first.
-  </Card>
-  <Card title="Admins" icon="shield-halved" href="/admin/content-library">
-    Capture the workflows contributors and cohort admins rely on.
-  </Card>
-  <Card title="AI" icon="sparkles" href="/ai/learnterms-models">
-    Explain how LearnTerms uses source material and model selection.
-  </Card>
-</CardGroup>
+- Student workflows like classes, modules, saved progress, and custom tests
+- Admin workflows like cohort organization, content ingestion, and AI-assisted generation
+- Contributor workflows like writing, editing, and attaching question media
+- Platform details like roles, auth, uploads, and system dependencies

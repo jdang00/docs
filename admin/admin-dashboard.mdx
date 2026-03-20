@@ -1,0 +1,69 @@
+---
+title: "Admin dashboard"
+description: "Use the admin dashboard to manage classes, content, generation, and cohort-side workflows."
+---
+
+## What the admin dashboard is
+
+The admin dashboard is the operational surface for users with elevated access. It is not just a menu. It is where cohort-specific maintenance and content operations begin.
+
+Current dashboard entry points include:
+
+- Content Library
+- Question Studio
+- Class Progress
+
+The dashboard also exposes class management and ordering tools that students do not need.
+
+## Who can access it
+
+Admin routes are protected in the SvelteKit server hooks. A user must be authenticated and must have a LearnTerms role of:
+
+- `curator`
+- `admin`
+- `dev`
+
+Students do not get admin access.
+
+## What admins manage here
+
+The dashboard is centered on operational tasks:
+
+- reviewing class lists by semester
+- reordering classes
+- editing class metadata
+- creating classes
+- deleting classes
+- moving into content and generation workflows
+
+Each of these matters because LearnTerms depends on a clean class and module hierarchy. If the structure is off, every downstream workflow is harder.
+
+## Semester-aware class management
+
+The class list is semester-aware. Admins can switch the active semester, and the dashboard filters the visible class list accordingly.
+
+This keeps the screen usable even when a cohort has many classes over time.
+
+## Reordering classes
+
+Class ordering is persisted, not just dragged locally. When an admin reorders a class, the app updates the stored order value in Convex.
+
+That matters for documentation because display order is part of the authored experience. It is not accidental.
+
+## Deleting classes carefully
+
+Before class deletion is confirmed, the app can query content counts like:
+
+- module count
+- question count
+
+This is useful operationally because deleting a class is not just deleting a label. It affects the actual content structure tied to that class.
+
+## Best admin habit
+
+The admin dashboard works best when it is treated as a maintenance layer:
+
+1. keep semesters and class ordering clean
+2. verify content is going into the right class
+3. use Question Studio only after the destination structure is correct
+4. review progress data after content changes if needed

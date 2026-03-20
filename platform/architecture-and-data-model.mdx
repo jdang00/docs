@@ -1,0 +1,116 @@
+---
+title: "Architecture and data model"
+description: "How LearnTerms is structured across auth, app routes, Convex, uploads, and AI generation."
+---
+
+## System overview
+
+LearnTerms is a SvelteKit application backed by Convex for data and server functions. Authentication flows through Clerk, file uploads use UploadThing, hosting is handled by Vercel, and AI-assisted generation sits on top of a product-facing model layer.
+
+At a high level:
+
+- SvelteKit renders the app and route structure
+- Clerk manages sign-in and identity
+- Convex stores app data and powers mutations, queries, and actions
+- UploadThing handles PDF and image uploads
+- The generation layer maps LearnTerms product modes to an underlying model
+
+## Core data model
+
+The schema is centered on structured academic content.
+
+### Academic hierarchy
+
+- `school`
+- `cohort`
+- `semester`
+- `class`
+- `module`
+- `question`
+
+This hierarchy is what makes the app feel curriculum-aware. Classes belong to cohorts. Modules belong to classes. Questions belong to modules.
+
+### User and progress data
+
+The `users` table stores identity and app-level metadata such as:
+
+- Clerk user ID
+- name, email, and image metadata
+- cohort assignment
+- role
+- denormalized progress stats
+- generation usage
+- PDF upload usage
+
+User progress is tracked separately so LearnTerms can remember:
+
+- selected options
+- eliminated options
+- flags
+- module-level activity
+
+### Content and authoring data
+
+Question and content authoring use several additional tables:
+
+- `contentLib` for uploaded source documents
+- chunk-related records for processed document content
+- `questionMedia` for image attachments
+- `tags` and `moduleTags` for class-scoped grouping
+
+## Route structure
+
+The route structure mirrors the product model:
+
+- `/classes` for the student dashboard and class selection
+- `/classes/[classId]/modules/[moduleId]` for module study
+- `/classes/[classId]/tests/new` for custom test creation
+- `/admin` and nested routes for admin workflows
+- `/badges`, `/cohort`, and `/status` for supporting product surfaces
+
+This alignment is worth documenting because it helps contributors understand where a feature belongs before they edit either docs or code.
+
+## Authentication and protected areas
+
+Clerk is wired into the SvelteKit server hooks. The app protects `/admin` routes by checking the authenticated user and then resolving their LearnTerms role from Convex.
+
+If the user is not authenticated, they are redirected to sign in. If they are authenticated but do not have an allowed role, they are redirected away from admin pages.
+
+That is why role docs are not just policy docs. They are route-access docs.
+
+## Upload pipeline
+
+UploadThing is configured with several routes:
+
+- `pdfUploader` for source PDFs
+- `questionMediaUploader` for question images
+- `imageUploader` for generic image upload use
+
+Current limits in code include:
+
+- PDFs: `16MB`, one file per upload
+- Question images: `8MB`, one image per upload
+
+The question media layer also enforces image-only uploads and stores metadata such as file size, original file name, and whether the image should appear only on the solution view.
+
+## Generation layer
+
+LearnTerms exposes generation through product-facing model IDs:
+
+- `swift-general`
+- `swift-optometry`
+- `swift-pharmacy`
+
+Today those all resolve to `gemini-3-flash-preview` with different focus settings. This is important because the product docs should describe the experience in LearnTerms terms, while technical docs should still acknowledge the underlying mapping.
+
+## Why this architecture matters for docs
+
+The docs should reflect the actual boundaries in the codebase:
+
+- content creation is cohort-scoped
+- questions are module-scoped
+- admin access is role-gated
+- uploads and generation have explicit limits
+- student progress is persistent, not session-only
+
+If the documentation follows those boundaries, it will stay aligned with the product instead of drifting into generic documentation language.

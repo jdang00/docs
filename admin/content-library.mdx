@@ -5,9 +5,9 @@ description: "Upload PDFs, review chunks, and prepare source material for LearnT
 
 ## What the Content Library does
 
-The Content Library is where admins and contributors turn source material into usable study content.
+The Content Library is the source-material layer for LearnTerms. It is where admins and contributors upload documents, organize them at the cohort level, and turn them into chunks that can later feed question generation and curation.
 
-Its main job is to take PDFs and convert them into structured chunks that support question writing and module preparation.
+In practice, it sits between raw course material and authored questions.
 
 ## Core workflow
 
@@ -15,6 +15,19 @@ Its main job is to take PDFs and convert them into structured chunks that suppor
 2. Wait for LearnTerms to process the document
 3. Review the generated chunks
 4. Edit, select, or remove chunks as needed
+
+The downstream goal is not just storage. The point is to create high-quality source text that can be used in Question Studio and other content workflows.
+
+## Upload rules and limits
+
+The current implementation is strict about uploads:
+
+- The documented library uploader is PDF-only
+- The configured PDF upload size limit is `16MB`
+- Free users have a daily PDF upload limit of `1`
+- Pro users effectively have a much higher daily ceiling
+
+If the daily limit is reached, the app throws an explicit error. Free-tier messaging encourages the user to upgrade, while Pro-tier messaging treats the limit as a temporary daily cap.
 
 ## What a chunk contains
 
@@ -26,6 +39,8 @@ Each chunk is intended to capture a meaningful section of the source material.
 - Keywords
 - Type, such as `paragraph`, `slide_group`, `diagram`, `table`, or `list`
 
+These fields matter because chunk quality affects generation quality. If the chunk title, summary, or content is vague, the resulting questions are more likely to be vague too.
+
 ## Editing and curation
 
 Admins and contributors can:
@@ -36,18 +51,27 @@ Admins and contributors can:
 - Delete bad chunks
 - Select multiple chunks to support question-writing workflows
 
+Document editing is also validated:
+
+- Title must be between `2` and `100` characters
+- Description is optional, but if present it must be between `10` and `500` characters
+
+That validation is useful to document because it explains why some edits fail.
+
 ## Scope and permissions
 
-Content is cohort-scoped. That means the library should reflect the source material relevant to that group of students, not a generic global repository.
+Content is cohort-scoped. A document belongs to a specific cohort, and the library query is filtered by that cohort ID. That means the library is not a global repository for every school or class in the system. It is intentionally local to the group that uses it.
 
 ## Operational tips
 
 - Large PDFs may take a little time to process.
 - Clean chunk titles make later question-writing much easier.
 - Delete weak or duplicated chunks early so downstream generation stays focused.
+- Use descriptions to make document intent obvious when the title alone is not enough.
 
 ## Common issues
 
 - No upload access: confirm the user has the right cohort role.
 - Unsupported file type: use PDFs for the documented upload flow.
 - Duplicate titles: document titles should remain unique inside a cohort.
+- Weak chunks: edit summaries and content before using them in Question Studio rather than trying to fix poor AI output later.

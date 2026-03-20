@@ -1,0 +1,84 @@
+---
+title: "Custom tests"
+description: "Build targeted tests from class modules, tags, filters, and timing settings."
+---
+
+## What custom tests are for
+
+Custom tests let a student turn a class into a targeted assessment instead of a simple linear module review. This is useful when you want to study across multiple modules, emphasize weak spots, or simulate timed conditions closer to an exam.
+
+The custom test builder is class-scoped. You start from a class and then choose which modules and filters should contribute eligible questions.
+
+## What you can configure
+
+The builder currently supports:
+
+- module selection
+- tag-based module selection
+- source filter: `all`, `flagged`, or `incomplete`
+- question count
+- question types
+- question shuffling
+- answer-option shuffling
+- timed or untimed mode
+- time limit in minutes
+- pass threshold percentage
+
+## Question types in the builder
+
+The current builder UI is focused on:
+
+- `multiple_choice`
+- `fill_in_the_blank`
+- `matching`
+
+That set is narrower than the broader question type model in the codebase, so the docs should treat it as the current builder surface rather than a universal rule for every future question type.
+
+## Limits and defaults
+
+The current implementation enforces a maximum of `100` questions per attempt. The effective question count is also clamped by the number of eligible questions in the filtered pool.
+
+Common default behaviors in the builder include:
+
+- shuffled questions enabled
+- shuffled options enabled
+- timed mode enabled
+- default time limit of `20` minutes
+- default pass threshold of `70%`
+
+## Source filters
+
+Source filters change the pool of questions before the test is assembled.
+
+- `all` includes all eligible questions from the selected modules
+- `flagged` emphasizes questions you previously marked
+- `incomplete` emphasizes questions you have not fully worked through
+
+These filters are what make the builder useful for second-pass review. They let you convert your existing study history into a targeted assessment.
+
+## Tags and module selection
+
+The builder can also derive module selection from tag collections. That is useful when the student wants to practice a topic that spans more than one module inside the same class.
+
+This is a good example of why class-scoped tags matter. They are not just labels. They can drive actual test assembly.
+
+## Starting an attempt
+
+When the student starts the test, LearnTerms:
+
+1. validates class access
+2. validates the selected modules and filters
+3. computes the eligible question pool
+4. creates a quiz attempt record
+5. routes the user into the attempt page
+
+If no eligible questions match the filter configuration, the attempt is blocked before the test starts.
+
+## When to use custom tests
+
+Custom tests are best for:
+
+- mixed review across several modules
+- targeted review of flagged questions
+- timed self-testing before an exam
+- checking whether you can perform under shuffled order rather than memorized sequence

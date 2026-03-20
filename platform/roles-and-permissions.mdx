@@ -1,0 +1,83 @@
+---
+title: "Roles and permissions"
+description: "Understand who can access student, curator, admin, and dev capabilities in LearnTerms."
+---
+
+## Why roles matter
+
+LearnTerms is role-gated at both the UI and route-protection level. Some pages are student-facing by default, while `/admin` routes are protected and require both authentication and an allowed LearnTerms role.
+
+This matters because the app is collaborative. It has to balance content access, content editing, and operational control without giving every user the same authority.
+
+## Main roles
+
+The schema and role-management logic currently recognize:
+
+- `student` as the implicit baseline when no elevated role is set
+- `curator`
+- `admin`
+- `dev`
+
+## What students can expect
+
+Students are the default consumers of:
+
+- classes
+- modules
+- module study
+- custom tests
+- personal progress
+- cohort-facing community surfaces
+
+Students do not get admin-route access.
+
+## What curators can expect
+
+Curators are part of the content-operations side of the app. In practice, they can access admin tools and work with content workflows such as:
+
+- document curation
+- question editing
+- question media
+- generation workflows
+
+Curators are elevated content contributors, not full operators of every role-management action.
+
+## What admins can expect
+
+Admins have broader cohort-level control, but not unlimited control.
+
+In the current role-management rules:
+
+- admins can manage `student` and `curator` role assignments
+- admins cannot manage `admin` or `dev` users
+- admins cannot assign `admin` or `dev` roles
+- admins cannot change their own role
+
+That is a deliberate guardrail, not a missing feature.
+
+## What devs can expect
+
+Devs are the highest-privilege role in the current model. A dev can bypass the admin limitations above and perform role changes that normal admins cannot.
+
+This is the role that carries full operational authority in the current implementation.
+
+## Route protection
+
+Admin routes are protected in the server hooks. When a request hits `/admin` or a nested admin path, the app:
+
+1. checks whether the user is authenticated
+2. resolves the user record from Convex
+3. verifies the role is `dev`, `admin`, or `curator`
+4. redirects unauthorized users away
+
+That means the docs should treat admin access as enforced behavior, not just convention.
+
+## Practical implications for documentation
+
+When writing docs, it helps to state clearly:
+
+- whether a page is student-facing
+- whether it requires curator or admin access
+- whether a workflow depends on cohort membership
+
+If a feature is permissioned, the docs should say so explicitly instead of waiting for the user to discover it by being blocked.
