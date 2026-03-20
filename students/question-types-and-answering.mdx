@@ -1,0 +1,140 @@
+---
+title: "Question types and answering"
+description: "Understand how LearnTerms handles multiple choice, fill in the blank, matching, checking, flags, and rationale."
+---
+
+## Why this matters
+
+LearnTerms is not built around one question format. If you treat every item like a basic flashcard, you will miss a lot of what the study flow is designed to support.
+
+The current product supports several question types, and each one asks for slightly different study behavior.
+
+## The main question types you will see
+
+LearnTerms currently supports these core question types in the shared model:
+
+- `multiple_choice`
+- `true_false`
+- `fill_in_the_blank`
+- `matching`
+
+In practice, the student-facing custom test builder currently centers on:
+
+- `multiple_choice`
+- `fill_in_the_blank`
+- `matching`
+
+That is an important distinction. The full question model is a little broader than every student-facing builder surface.
+
+## Multiple choice
+
+This is the most familiar format. You read the stem, compare the options, eliminate weak choices if helpful, and then use **Check**.
+
+Good LearnTerms multiple choice questions are usually trying to do one of three things:
+
+- test recall of a fact or relationship
+- force you to discriminate between close concepts
+- make you apply the idea instead of repeating a definition
+
+### How to use it well
+
+- Eliminate distractors before you commit if two answers feel close.
+- Use **Flag** when you get the answer right for the wrong reason.
+- Read the rationale after you answer, not before.
+
+## True/false
+
+True/false exists in the shared question model even if you see it less often than multiple choice. Treat it carefully. These questions look simple, but they often expose whether you actually understand a statement or only recognize familiar words.
+
+The trap with true/false is speed. Students answer too quickly because the format looks easy.
+
+## Fill in the blank
+
+Fill in the blank questions are useful when LearnTerms wants cleaner recall than recognition. They work well for terminology, mechanisms, exact phrasing, and other content where generating the answer matters.
+
+Behind the scenes, LearnTerms can use different matching modes for accepted answers, but your job as a student is simpler: answer precisely and do not assume a near miss will count.
+
+### Best use
+
+- type the answer before looking for hints elsewhere
+- pay attention to spelling and terminology
+- treat near misses as useful feedback, not annoying edge cases
+
+This format is especially good when you need stronger recall instead of multiple choice recognition.
+
+## Matching
+
+Matching questions ask you to connect prompts and answers. They work best for:
+
+- term-definition relationships
+- drug-mechanism pairings
+- structure-function mappings
+- condition-feature sets
+
+Matching is easy to underestimate. It feels lighter than a long multiple choice item, but it actually tests whether you can hold several associations in working memory at once.
+
+### Best use
+
+- solve the obvious pairs first
+- leave the ambiguous pairs for the end
+- use the remaining pool to narrow the hard matches
+
+## What happens when you answer
+
+Across formats, the study flow usually follows the same pattern:
+
+1. you make a selection or response
+2. LearnTerms saves your progress state
+3. you use **Check**
+4. the interface shifts from answer mode to feedback mode
+
+That feedback mode is a major part of the study flow. The app is designed to keep the correction loop tight so you can learn while the reasoning is still fresh.
+
+## Elimination is part of the workflow
+
+LearnTerms lets you eliminate options while you think. That is not cosmetic.
+
+Elimination helps you:
+
+- slow down on ambiguous questions
+- make your reasoning visible to yourself
+- come back later and remember how far you got
+
+The app can persist eliminated options along with selections and flags, which makes your progress feel less disposable than a normal quiz UI.
+
+## Flags are for uncertainty, not just wrong answers
+
+Use **Flag** when:
+
+- you guessed correctly
+- the rationale taught you something you did not fully know
+- you want to revisit the item before an exam
+- the question exposed a pattern you keep missing
+
+Students often misuse flags by treating them as a list of only wrong answers. That leaves out some of the most valuable review targets.
+
+## Rationales are where a lot of the learning happens
+
+When a question has a rationale, LearnTerms can reveal it in the sidebar or review flow. Rationales matter because they turn the app from a pure checking tool into a teaching tool.
+
+A strong rationale should help you answer the next similar question faster and more accurately.
+
+## Attachments can change when you see them
+
+Some questions include image attachments. In some cases, an attachment may be visible immediately. In other cases, it may be held back until solution view so it does not give the answer away too early.
+
+That behavior is intentional. If an image would collapse the question too soon, LearnTerms can keep it for review mode.
+
+## Best student habits
+
+- answer first, then study the explanation
+- use elimination instead of mentally juggling every option
+- flag questions that felt shaky, even when you were right
+- take matching questions seriously instead of treating them like filler
+- use fill in the blank when you want cleaner recall than multiple choice gives you
+
+## Related guides
+
+- [Studying a module](/students/study-flow)
+- [Module settings and shortcuts](/students/module-settings-and-shortcuts)
+- [Test results and review](/students/test-results-and-review)

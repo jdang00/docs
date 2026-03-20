@@ -27,29 +27,40 @@
             "pages": [
               "index",
               "onboarding",
+              "overview/history",
               "platform/architecture-and-data-model"
             ]
           },
           {
             "group": "Students",
             "pages": [
+              "students/join-your-cohort",
               "students/classes-and-modules",
+              "students/dashboard-and-recent-activity",
               "students/study-flow",
-              "students/custom-tests"
+              "students/question-types-and-answering",
+              "students/module-settings-and-shortcuts",
+              "students/custom-tests",
+              "students/test-results-and-review",
+              "students/badges-and-cohort-board"
             ]
           },
           {
             "group": "Admins",
             "pages": [
               "admin/admin-dashboard",
+              "admin/class-and-module-management",
               "admin/content-library",
-              "admin/question-studio"
+              "admin/question-studio",
+              "admin/class-progress-and-role-management"
             ]
           },
           {
             "group": "Contributors",
             "pages": [
-              "contributors/question-authoring"
+              "contributors/question-authoring",
+              "contributors/reviewing-and-curating-questions",
+              "contributors/question-media-and-attachments"
             ]
           },
           {

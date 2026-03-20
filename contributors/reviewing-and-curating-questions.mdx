@@ -1,0 +1,139 @@
+---
+title: "Reviewing and curating questions"
+description: "Turn generated or imported questions into student-ready module content through filtering, editing, status control, and bulk operations."
+---
+
+## What curation means in LearnTerms
+
+Curation is the step between "a question exists" and "a student should study it."
+
+That means your job is not only to write or generate questions. Your job is to make sure each question belongs in the right module, uses the right status, and behaves well in the study flow.
+
+## Where curation happens
+
+Most curation work happens on the module page:
+
+- `/admin/[classId]/module/[moduleId]`
+
+This is the page where a module's question bank becomes editable, sortable, searchable, and reviewable.
+
+## How questions usually arrive there
+
+Questions can arrive in a module a few ways:
+
+- manually authored by a contributor
+- inserted from **Question Studio**
+- duplicated from existing questions
+- moved from another module
+
+No matter how they arrive, they still need curation.
+
+## The curation controls that matter most
+
+The module curation page gives you several practical tools:
+
+- search
+- sort by order or recency
+- filter by status
+- select all
+- bulk move
+- bulk delete
+- reorder
+- add question
+
+These controls exist because the hard part of curation is often organization, not writing.
+
+## Status is a publishing decision
+
+Question status is not cosmetic. It controls whether the item is ready for student use.
+
+The current question filters include:
+
+- `all`
+- `published`
+- `draft`
+- `archived`
+
+Use them intentionally:
+
+- **Published** means student-ready
+- **Draft** means not ready yet
+- **Archived** means keep the record, but take it out of the normal active flow
+
+## Set a default before you add a lot of content
+
+The curation UI lets you choose whether new questions save as:
+
+- **Published**
+- **Draft**
+
+This is a small setting with big consequences.
+
+If you are doing heavy editing or importing uncertain material, defaulting to **Draft** is safer. If you are doing small, high-confidence additions, **Published** may be fine.
+
+## Reordering questions
+
+Reorder mode lets you drag questions into a better sequence. That matters when:
+
+- the module should move from basic to advanced
+- a generated batch arrived in a poor order
+- you want related question clusters to stay together
+
+Good order improves the student experience more than many contributors expect.
+
+## Bulk operations are for cleanup, not carelessness
+
+Bulk move and bulk delete are useful, but they can also create a mess if you use them too quickly.
+
+Use bulk move when:
+
+- a set of questions clearly belongs in a different module
+- generation landed in the right class but the wrong destination module
+
+Use bulk delete when:
+
+- the batch is clearly weak
+- the questions are redundant
+- the content drifted away from the source material
+
+## Duplicate before rewriting when the idea is good
+
+If a question has a strong core idea but poor wording, duplication can be cleaner than destructive editing. It lets you preserve the useful concept while trying a better execution.
+
+That is often faster than rebuilding from zero.
+
+## Module limits matter
+
+The current module curation experience enforces a `150` question limit per module.
+
+That limit is product-facing and deliberate. LearnTerms treats modules as focused study units, not bottomless warehouses.
+
+If you are approaching the limit, the right move is usually not to cram more in. The right move is to split the module or clean the weakest items out.
+
+## What to review before publishing
+
+Before you mark a question as student-ready, check:
+
+- does it belong in this module
+- is the stem clear
+- are the options distinct
+- is the correct answer actually defensible
+- does the rationale teach something useful
+- does the status reflect reality
+
+If one weak question gets published, students feel it immediately. This is one of the most quality-sensitive parts of LearnTerms.
+
+## A practical curation workflow
+
+1. Generate or add questions into the correct module.
+2. Leave them as **Draft** if quality is still uncertain.
+3. Search and filter to isolate the batch you just worked on.
+4. Reorder obvious clusters.
+5. Move or delete questions that do not belong.
+6. Publish only the items you would be comfortable studying yourself.
+
+## Related guides
+
+- [Question Studio](/admin/question-studio)
+- [Question authoring](/contributors/question-authoring)
+- [Question media and attachments](/contributors/question-media-and-attachments)

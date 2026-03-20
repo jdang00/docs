@@ -1,0 +1,164 @@
+---
+title: "Class and module management"
+description: "Manage class structure, semesters, modules, tags, ordering, and exports without creating downstream chaos."
+---
+
+## Why this page matters
+
+LearnTerms gets a lot of its value from structure. If the class and module hierarchy is messy, student study flow gets worse, Question Studio gets less reliable, and progress reporting becomes harder to trust.
+
+This page is about protecting that structure.
+
+## Start from the admin dashboard
+
+Most class-structure work begins in `/admin`.
+
+From there, you usually move into:
+
+- class management on the main admin dashboard
+- a specific class page at `/admin/[classId]`
+- a specific module curation page at `/admin/[classId]/module/[moduleId]`
+
+## Managing classes on the admin dashboard
+
+The admin dashboard is semester-aware. That is important because class order is managed inside a semester, not across the entire history of the cohort.
+
+### What you can do there
+
+- switch semesters
+- create classes
+- edit class details
+- delete classes
+- reorder classes
+
+### What good class management looks like
+
+Good class management keeps these fields clean:
+
+- name
+- code
+- description
+- semester
+- order
+
+Those fields are not just metadata. They shape what students see first.
+
+## Validation rules for classes
+
+Current class validation is strict in useful ways:
+
+- class name: `2` to `100` characters
+- class code: `2` to `20` characters
+- description: `10` to `500` characters
+- class codes can only use letters, numbers, spaces, hyphens, and underscores
+- class names must be unique inside the cohort
+- class codes must be unique inside the cohort
+
+These rules matter because admin structure becomes student-facing structure very quickly.
+
+## Reordering classes
+
+Class reordering is persistent, not visual-only. When you move a class, LearnTerms updates stored order values.
+
+The important detail is that the app reorders classes within the same semester. If you are expecting one global drag order across every term, that is not how the current product behaves.
+
+## Delete classes carefully
+
+Deleting a class can also delete the modules and questions under it. LearnTerms surfaces counts before confirmation because this is structural deletion, not cosmetic cleanup.
+
+Treat class deletion as a last step, not a normal maintenance action.
+
+## Managing modules inside a class
+
+Once you open a class page, the focus shifts from broad structure to study units.
+
+Current module management includes:
+
+- adding modules
+- editing modules
+- deleting modules
+- reordering modules
+- viewing question counts
+- managing tags
+- exporting questions from a module
+
+## Module fields that matter most
+
+A module currently has a few important student-facing fields:
+
+- title
+- emoji
+- description
+- status
+- order
+- question count
+
+Students feel the quality of module naming immediately. If titles are vague, too long, or inconsistent, the entire class becomes harder to use.
+
+## Module status matters
+
+Current module statuses are:
+
+- `draft`
+- `published`
+- `archived`
+
+Only published modules appear in the normal student class flow. That means status is an actual release control, not a decorative label.
+
+Use:
+
+- `draft` for work in progress
+- `published` for student-ready modules
+- `archived` for modules you want to keep out of the active student flow
+
+## Module validation rules
+
+Current module rules include:
+
+- title: `2` to `100` characters
+- description: `10` to `500` characters
+- emoji: optional, but emoji-only if provided
+- duplicate titles are blocked within the class
+
+These guardrails are useful because modules are one of the most visible pieces of authored product structure.
+
+## Tags are operational, not decorative
+
+Tags are managed on the class page and attached to modules. Their purpose is to group modules in a way that can support cross-module workflows, especially custom tests.
+
+That means tags are best used for meaningful collections such as:
+
+- exam blocks
+- unit groupings
+- chapter clusters
+- review sets that cut across several modules
+
+### Tag rules worth knowing
+
+- tag names must be `2` to `40` characters
+- tag names must be unique within the class
+- colors must be six-digit hex values
+- a module can have at most `10` tags
+
+If a tag does not help students find or assemble content, it is probably not a good tag.
+
+## Exporting module questions
+
+The class page also supports question export for modules that already have content. Export is gated behind Pro access in the current product.
+
+That means export is useful operationally, but it is not part of the default free workflow.
+
+## Good admin habits
+
+1. Clean the class structure before you generate or author questions.
+2. Keep module titles specific enough that a student can choose quickly.
+3. Publish only when the module is genuinely ready for students.
+4. Use tags sparingly and intentionally.
+5. Treat deletion as irreversible content surgery, not spring cleaning.
+
+## Related guides
+
+- [Admin dashboard](/admin/admin-dashboard)
+- [Class progress and role management](/admin/class-progress-and-role-management)
+- [Question Studio](/admin/question-studio)
+- [Reviewing and curating questions](/contributors/reviewing-and-curating-questions)

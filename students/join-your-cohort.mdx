@@ -1,0 +1,103 @@
+---
+title: "Join your cohort"
+description: "Use your join code, confirm the right cohort, and get into the correct LearnTerms study space."
+---
+
+## What this step actually does
+
+Joining a cohort is not just account setup. It is how LearnTerms decides which **classes**, **modules**, documents, badges, and admin tools belong to you.
+
+If you join the wrong cohort, the rest of the app will feel wrong because LearnTerms scopes nearly everything to that cohort.
+
+## When you need this
+
+You need the join flow when:
+
+- you just created your account
+- you were invited into a new cohort
+- you signed in and were sent straight to `/join-class`
+
+If you already see your classes in `/classes`, you are past this step.
+
+## What you need before you start
+
+You need one thing: the cohort join code.
+
+That code usually comes from your class organizer, admin, or contributor team. LearnTerms calls it a class code in the UI, but it is really a code for the cohort you are joining.
+
+## How to join
+
+1. Open the join flow at `/join-class`.
+2. Enter your code in **Enter your class code...**.
+3. Select **Join Class**.
+4. Review the confirmation screen carefully.
+5. Select **Confirm & Join**.
+
+The confirmation screen shows the cohort name, school, academic year, and sometimes a description. Treat that screen as your last check before you attach your account to the cohort.
+
+## What to verify on the confirmation screen
+
+Before you confirm, check:
+
+- the cohort name matches your class year or group
+- the school name is correct
+- the academic year range looks right
+- the description matches what you expected, if one is shown
+
+If any of that looks off, stop there and ask for a new code. It is much easier to fix a wrong code before you join than after you start using the wrong study space.
+
+## What happens after you confirm
+
+When you confirm, LearnTerms saves the cohort on your user record and sends you to `/classes`.
+
+From that point on:
+
+- your dashboard is filtered to the cohort you joined
+- your available classes come from that cohort
+- your custom tests only use that cohort's class content
+- your badges and cohort board activity are tied to that group
+- admin and contributor tools, if your role allows them, operate inside that cohort
+
+This is why onboarding matters more in LearnTerms than in a generic study app. The platform is built around a shared academic structure, not a personal folder system.
+
+## If you are sent to the join flow automatically
+
+LearnTerms does this on purpose in two common cases:
+
+1. Your account exists in Clerk, but you do not have a LearnTerms user record yet.
+2. Your LearnTerms user record exists, but it does not have a `cohortId`.
+
+In both cases, the app blocks the normal class dashboard until the cohort is set.
+
+## Common errors and what they usually mean
+
+### "Please enter a class code"
+
+You tried to submit an empty field. Paste or type the full code and try again.
+
+### "Invalid class code. Please check and try again."
+
+The code does not match a live cohort record. Usually that means:
+
+- the code was typed incorrectly
+- the wrong code was shared
+- the cohort has not been configured yet
+
+### "Failed to join class. Please try again."
+
+The code was valid, but LearnTerms could not attach your account to the cohort. This is usually a temporary issue or a sign that your user setup needs attention.
+
+## Best practices
+
+- Keep the code exactly as it was shared.
+- Read the confirmation screen instead of clicking through it.
+- Join first, then worry about classes and modules.
+- If your classmate sees different classes than you do, confirm you both joined the same cohort.
+
+## What to do next
+
+After you join successfully, your next pages are usually:
+
+- [Classes and modules](/students/classes-and-modules)
+- [Dashboard and recent activity](/students/dashboard-and-recent-activity)
+- [Studying a module](/students/study-flow)

@@ -1,0 +1,164 @@
+---
+title: "Class progress and role management"
+description: "Use the progress dashboard to monitor engagement, inspect student details, and handle roles with the right guardrails."
+---
+
+## What this area is for
+
+The **Class Progress** area is the admin view for answering two practical questions:
+
+1. Is the cohort using LearnTerms in a healthy way?
+2. Does the right person have the right level of access?
+
+That makes this page operational, not just analytical.
+
+## Where to find it
+
+Open `/admin/progress` from the admin dashboard.
+
+The page is organized into three tabs:
+
+- **Overview**
+- **Module Analytics**
+- **Students**
+
+Each one answers a different admin question.
+
+## The overview tab
+
+The overview tab is your fast pulse check. It surfaces cohort-wide numbers such as:
+
+- total students
+- total questions
+- total modules
+- active learners
+
+This is useful when you want to know whether the content library and question bank are actually turning into student activity.
+
+## How to read active learners
+
+In the current app, active learners are based on whether students have interacted with questions.
+
+That means this metric is good for:
+
+- adoption
+- engagement
+- rough momentum
+
+It is not the same thing as mastery. A cohort can have high activity and still need better content or better sequencing.
+
+## The module analytics tab
+
+Module Analytics is where you move from broad health to content diagnosis.
+
+Use it when you want to ask:
+
+- which modules are actually getting used
+- where students are struggling
+- whether a module has weak spots that deserve curation attention
+
+This tab is a better fit for content decisions than the overview numbers alone.
+
+## The students tab
+
+The **Students** tab is your roster plus individual drill-down view.
+
+It is useful when you need to:
+
+- search for a student quickly
+- see who is active versus inactive
+- open a student detail modal
+- inspect progress by semester, class, and module
+
+This tab is especially helpful when a student says, "I have been using LearnTerms a lot," and you need to distinguish between high effort, scattered effort, and very little real interaction.
+
+## What the student detail view shows
+
+The student detail modal is more than a profile card. It combines:
+
+- basic identity details
+- current role badges
+- Pro status indicator when relevant
+- overall progress numbers
+- a breakdown by semester, class, and module
+
+This lets you answer operational questions without hopping across several pages.
+
+## How to use the progress breakdown
+
+The class and module breakdown is strongest when you use it to spot patterns:
+
+- one student is active only in one class
+- a whole module is getting touched but not mastered
+- flagged counts are unusually high in a narrow section
+- a student has started many modules but finished few
+
+Those patterns are usually more actionable than the top-line progress percentage by itself.
+
+## Role management rules
+
+Role management is intentionally constrained.
+
+The current practical roles are:
+
+- student
+- curator
+- admin
+- dev
+
+### What admins can do
+
+Admins can manage:
+
+- students
+- curators
+
+Admins cannot:
+
+- promote users to `admin`
+- promote users to `dev`
+- manage other admins
+- manage devs
+- change their own role
+
+### What devs can do
+
+Devs have the highest level of operational access and can bypass the admin limits above.
+
+That guardrail is deliberate. LearnTerms treats role changes as sensitive operations, not casual toggles.
+
+## When to promote someone to curator
+
+Promote a student to **curator** when they need to:
+
+- edit questions
+- work in content workflows
+- support generation and curation
+- help manage authored material without taking on full cohort operations
+
+Curator is the right role for content work. It is not a shortcut to broad admin authority.
+
+## When to keep someone as a student
+
+Keep someone as a student when they only need:
+
+- class access
+- module study
+- custom tests
+- personal progress and badge activity
+
+Do not promote access just because someone is highly engaged. Promote when the workflow truly requires it.
+
+## Good admin habits
+
+- Use **Overview** for pulse, not diagnosis.
+- Use **Module Analytics** when a content area feels weak.
+- Use the student modal when you need actual context, not assumptions.
+- Promote users only for a real workflow need.
+- Keep role changes narrow and intentional.
+
+## Related guides
+
+- [Admin dashboard](/admin/admin-dashboard)
+- [Class and module management](/admin/class-and-module-management)
+- [Roles and permissions](/platform/roles-and-permissions)
