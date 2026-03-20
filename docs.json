@@ -88,7 +88,7 @@
   "navbar": {
     "links": [
       {
-        "label": "App",
+        "label": "",
         "href": "https://www.learnterms.com"
       }
     ],
@@ -114,5 +114,8 @@
     "socials": {
       "github": "https://github.com/jdang00/learnterms"
     }
+  },
+  "fonts": {
+    "family": "Geist"
   }
 }
