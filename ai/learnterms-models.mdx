@@ -1,0 +1,38 @@
+---
+title: "LearnTerms generation models"
+description: "Choose the right LearnTerms model for question generation."
+---
+
+## What these models are
+
+LearnTerms generation models are product-facing modes for AI-assisted question creation.
+
+They are part of the LearnTerms generation layer and are meant to hide raw model complexity behind subject-aware choices that make sense to contributors.
+
+## Available models
+
+| Model | Focus | Best for |
+| --- | --- | --- |
+| `swift-general` | General health sciences | Mixed or interdisciplinary content |
+| `swift-optometry` | Ocular and vision science | Eye care, ophthalmology, and vision topics |
+| `swift-pharmacy` | Pharmacology and therapeutics | Drug mechanisms, therapies, and clinical medication content |
+
+## How to choose
+
+Pick the model that matches the course or material you are working with.
+
+- Use `swift-general` when the material spans multiple domains.
+- Use `swift-optometry` when the content is specifically vision or ocular focused.
+- Use `swift-pharmacy` when the source material centers on therapeutics, mechanisms, and medication use.
+
+## What the generation layer is trying to do
+
+The LearnTerms layer is not meant to act like a generic chatbot. It is designed to produce study questions that better match course context, academic domain, and exam style.
+
+That means the model choice should stay close to the subject matter, not just user preference.
+
+## Practical guidance
+
+- Start with the model that most closely matches the module topic.
+- Use stronger source chunks before you try to tune prompts.
+- Treat model choice as a relevance decision, not a creativity setting.

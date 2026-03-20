@@ -1,33 +1,36 @@
-> **First-time setup**: Customize this file for your project. Prompt the user to customize this file for their project.
-> For Mintlify product knowledge (components, configuration, writing standards),
-> install the Mintlify skill: `npx skills add https://mintlify.com/docs`
-
-# Documentation project instructions
+# LearnTerms docs instructions
 
 ## About this project
 
-- This is a documentation site built on [Mintlify](https://mintlify.com)
-- Pages are MDX files with YAML frontmatter
-- Configuration lives in `docs.json`
-- Run `mint dev` to preview locally
-- Run `mint broken-links` to check links
+- This repo powers the external LearnTerms documentation site on Mintlify.
+- Pages are written in MDX with YAML frontmatter.
+- Site configuration lives in `docs.json`.
+- Run `npx mint dev` to preview locally.
+- Run `npx mint broken-links` to validate internal links.
+
+## Source material
+
+- Prefer the LearnTerms app repo at `/Users/justindang/learnterms` as the source of truth.
+- Existing in-app docs live under `/Users/justindang/learnterms/src/routes/docs`.
+- Product workflows should match the current app UI and route structure.
 
 ## Terminology
 
-{/* Add product-specific terms and preferred usage */}
-{/* Example: Use "workspace" not "project", "member" not "user" */}
+- Use `cohort`, `class`, `module`, and `question` consistently.
+- Prefer `study flow` over generic phrases like `learning experience`.
+- Use `Content Library` and `Question Studio` as product names.
+- Refer to LearnTerms generation models by their product-facing names.
 
 ## Style preferences
 
-{/* Add any project-specific style rules below */}
-
-- Use active voice and second person ("you")
-- Keep sentences concise — one idea per sentence
-- Use sentence case for headings
-- Bold for UI elements: Click **Settings**
-- Code formatting for file names, commands, paths, and code references
+- Use active voice and second person.
+- Keep sentences concise and concrete.
+- Lead with the user goal or workflow.
+- Bold UI labels and controls.
+- Use code formatting for commands, paths, route segments, and config keys.
 
 ## Content boundaries
 
-{/* Define what should and shouldn't be documented */}
-{/* Example: Don't document internal admin features */}
+- Document shipped behavior first.
+- Mark planned or migrating areas clearly instead of presenting them as complete.
+- Do not copy Mintlify starter language unless it is specifically about the Mintlify toolchain.

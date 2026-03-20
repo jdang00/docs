@@ -1,97 +1,52 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "LearnTerms documentation"
+description: "Guides for students, contributors, and admins using LearnTerms."
 ---
 
-## Setting up
+<Tip>
+  These docs are the new external home for LearnTerms guidance as content moves out of the in-app docs.
+</Tip>
 
-Get your documentation site up and running in minutes.
+## Built for focused studying
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
+LearnTerms is a cohort-based study platform designed to help you spend less time organizing and more time learning. The product keeps classes, modules, questions, and progress tightly connected so every study session stays relevant to the material you actually need to know.
 
-## Make it yours
+The docs follow that same principle. Start with onboarding and local setup, then move into the workflows you use most: studying modules, managing content, and generating questions from source material.
 
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
+<CardGroup cols={2}>
+  <Card title="Onboarding" icon="rocket" href="/onboarding">
+    Learn how LearnTerms is organized and how a cohort gets started.
   </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
+  <Card title="Preview the docs" icon="rectangle-terminal" href="/development">
+    Run the Mintlify preview locally before you push any changes.
   </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+  <Card title="Study flow" icon="book-open" href="/students/study-flow">
+    See how module practice works from question answering to review.
   </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
+  <Card title="Content Library" icon="folder-open" href="/admin/content-library">
+    Manage PDFs, chunks, and admin-side source content.
   </Card>
-</Columns>
+</CardGroup>
 
-## Create beautiful pages
+## What belongs here
 
-Everything you need to create world-class documentation.
+These docs should explain the real LearnTerms product as it exists in the app:
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+- Student workflows like classes, modules, tests, and progress
+- Admin workflows like content ingestion, question curation, and cohort management
+- AI-assisted workflows like chunking and LearnTerms generation models
+- Local development and docs contribution guidance for the Mintlify site
 
-## Need inspiration?
+## Current migration priorities
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+<CardGroup cols={3}>
+  <Card title="Students" icon="graduation-cap" href="/students/study-flow">
+    Document the day-to-day study experience first.
+  </Card>
+  <Card title="Admins" icon="shield-halved" href="/admin/content-library">
+    Capture the workflows contributors and cohort admins rely on.
+  </Card>
+  <Card title="AI" icon="sparkles" href="/ai/learnterms-models">
+    Explain how LearnTerms uses source material and model selection.
+  </Card>
+</CardGroup>
