@@ -65,6 +65,13 @@
             ]
           },
           {
+            "group": "AI",
+            "pages": [
+              "ai/what-is-an-ai-agent",
+              "ai/learnterms-models"
+            ]
+          },
+          {
             "group": "Platform",
             "pages": [
               "platform/roles-and-permissions",

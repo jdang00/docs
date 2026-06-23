@@ -1,77 +1,72 @@
 ---
 title: "Content Library"
-description: "Upload PDFs, review chunks, and prepare source material for LearnTerms."
+description: "Upload source documents, preview them, and prepare clean material for question generation."
 ---
 
-## What the Content Library does
+## What the Content Library is
 
-The Content Library is the source-material layer for LearnTerms. It is where admins and contributors upload documents, organize them at the cohort level, and turn them into chunks that can later feed question generation and curation.
+The **Content Library** is where you keep the source material your cohort generates questions from. You upload documents, preview them, organize them, and hand the good ones off to **Question Studio**.
 
-In practice, it sits between raw course material and authored questions.
+Think of it as the shelf between your raw course files and the questions your cohort studies. The cleaner the material on that shelf, the better the questions that come out of it.
 
-## Core workflow
+Everything in the library is **cohort-scoped** — you see your cohort's documents, not the whole platform's.
 
-1. Upload a PDF
-2. Wait for LearnTerms to process the document
-3. Review the generated chunks
-4. Edit, select, or remove chunks as needed
+## Uploading a document
 
-The downstream goal is not just storage. The point is to create high-quality source text that can be used in Question Studio and other content workflows.
+Click **Add file** to open the uploader. You can either **drag and drop** a file onto the panel or browse for one.
 
-## Upload rules and limits
+- Uploads are **PDF** files.
+- The size limit is **50MB** per file.
+- A progress bar shows the upload as it runs.
+- If a file is the wrong type or too large, you'll see a clear message explaining why.
 
-The current implementation is strict about uploads:
+Once a file finishes uploading, LearnTerms processes it in the background — reading the text, pulling out tables and figures, and getting it ready to preview and use. Large files can take a little longer to finish processing.
 
-- The documented library uploader is PDF-only
-- The configured PDF upload size limit is `16MB`
-- Free users have a daily PDF upload limit of `1`
-- Pro users effectively have a much higher daily ceiling
+## Browsing your library
 
-If the daily limit is reached, the app throws an explicit error. Free-tier messaging encourages the user to upgrade, while Pro-tier messaging treats the limit as a temporary daily cap.
+The toolbar gives you a few ways to find what you need:
 
-## What a chunk contains
+- **Search** — type in **Search files...** to filter by name.
+- **Sort** — order documents by **Recently updated**, **Name (A-Z)**, **Oldest first**, **Largest first**, or **File type**.
+- **Grid or list view** — switch layouts with the view toggle, whichever you find easier to scan.
 
-Each chunk is intended to capture a meaningful section of the source material.
+Each document shows a type badge so you can tell at a glance what it is: **PDF**, **Slides**, **Image**, or **Document**, along with its size and when it was last updated.
 
-- Title
-- Summary
-- Full content
-- Keywords
-- Type, such as `paragraph`, `slide_group`, `diagram`, `table`, or `list`
+## Opening and previewing a document
 
-These fields matter because chunk quality affects generation quality. If the chunk title, summary, or content is vague, the resulting questions are more likely to be vague too.
+Open any document to bring up its detail drawer, which has three tabs:
 
-## Editing and curation
+<Tabs>
+  <Tab title="Preview">
+    A clean, readable rendering of the document's content — formatted text, **tables**, and math all displayed in place. Tables can be opened **fullscreen** when they're too wide to read comfortably. Slide-style documents can be viewed in a **deck (presentation) mode** that shows them slide by slide.
+  </Tab>
+  <Tab title="Source">
+    The underlying extracted text from the document. This is the exact material that question generation reads from, so it's the best place to check whether the document came through cleanly.
+  </Tab>
+  <Tab title="Properties">
+    Details about the file itself — name, type, size, and dates.
+  </Tab>
+</Tabs>
 
-Admins and contributors can:
+You can also expand the panel to **fullscreen** for a closer look, or open the original file in a new tab.
 
-- Rename documents
-- Update descriptions
-- Edit chunk titles, summaries, keywords, and content
-- Delete bad chunks
-- Select multiple chunks to support question-writing workflows
+## Keeping the library clean
 
-Document editing is also validated:
+A few simple habits keep your library useful:
 
-- Title must be between `2` and `100` characters
-- Description is optional, but if present it must be between `10` and `500` characters
+- **Give documents clear names.** A descriptive title makes the right file easy to find later.
+- **Check the Source tab after uploading.** If the extracted text looks garbled or incomplete, that document will produce weak questions — fix or replace it before using it.
+- **Delete what you don't need.** Use the delete option (you'll be asked to confirm) to remove outdated or duplicate files so the library stays focused.
 
-That validation is useful to document because it explains why some edits fail.
+## Why this matters for generation
 
-## Scope and permissions
+The Content Library is the foundation that **Question Studio** builds on. When you generate questions, the agent reads only from the document and pages you select here — it can't pull in anything outside your material.
 
-Content is cohort-scoped. A document belongs to a specific cohort, and the library query is filtered by that cohort ID. That means the library is not a global repository for every school or class in the system. It is intentionally local to the group that uses it.
+That means most "bad generation" is really a source-material problem. A clean, well-structured document in the library leads directly to clearer, more accurate questions for your cohort. To see how that source feeds into generation, read [What is an AI agent?](/ai/what-is-an-ai-agent) and [Question Studio](/admin/question-studio).
 
-## Operational tips
+## Common questions
 
-- Large PDFs may take a little time to process.
-- Clean chunk titles make later question-writing much easier.
-- Delete weak or duplicated chunks early so downstream generation stays focused.
-- Use descriptions to make document intent obvious when the title alone is not enough.
-
-## Common issues
-
-- No upload access: confirm the user has the right cohort role.
-- Unsupported file type: use PDFs for the documented upload flow.
-- Duplicate titles: document titles should remain unique inside a cohort.
-- Weak chunks: edit summaries and content before using them in Question Studio rather than trying to fix poor AI output later.
+- **I can't upload a file.** Confirm it's a PDF and under 50MB, and that you have an admin or contributor role in the cohort.
+- **My document looks empty or messy in Preview.** The original file may be image-only or poorly formatted. Check the **Source** tab; if the text didn't extract well, re-export a cleaner version and re-upload.
+- **A document isn't showing up in Question Studio.** It needs to finish processing first. Give large files a moment, then try again.
+- **I don't see another cohort's files.** That's expected — the library only shows your own cohort's documents.

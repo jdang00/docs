@@ -1,0 +1,76 @@
+---
+title: "What is an AI agent?"
+description: "A plain-language guide to the AI agent behind LearnTerms generation, and what its software terms mean for you."
+---
+
+## Start here
+
+When you generate questions in **Question Studio**, you are not chatting with a generic AI. You are handing work to an **AI agent**: a system that takes a goal, makes a plan, does the work in steps, checks its own output, and hands you a result to approve.
+
+This page explains what an agent is, walks through the loop it runs every time you generate, and translates the software terms you might hear into what they actually mean for you as a LearnTerms user.
+
+## What "agent" actually means
+
+A plain AI model answers one prompt at a time. An **agent** wraps a model in a repeatable process: it can break a job into stages, look things up, and judge its own results before showing them to you.
+
+In LearnTerms, that job is always the same: turn the source material you selected into solid, exam-style questions for a specific module. The agent is built to do *that* job well, which is why it cannot wander off-topic, chat freely, or pull in facts from outside your material.
+
+**What it means for you:** you get questions that stay close to your course content, not generic trivia. The trade-off is that the quality of what you get depends heavily on the quality of the source you give it.
+
+## The agent loop, step by step
+
+Every generation run moves through the same stages. You can watch them happen in the timeline panel while the agent works.
+
+<Steps>
+  <Step title="Plan">
+    The agent first reads your selected topics and source pages and writes a short **coverage plan**: how many questions per topic, which pages back them up, what difficulty mix to aim for, and any risks it sees (thin coverage, overlap, possible duplicates). It does **not** write questions yet.
+  </Step>
+  <Step title="Draft">
+    Using that plan, the agent drafts question **candidates** grounded only in your source pages. Each candidate is tied to one topic and one set of source pages.
+  </Step>
+  <Step title="Review">
+    The agent then re-reads its own drafts against the source and grades each one: **accept**, **revise**, or **reject**. Weak, ambiguous, or unsupported questions get fixed or thrown out before you ever see them.
+  </Step>
+</Steps>
+
+After the loop finishes, you get a clean set of candidates to inspect, keep, or discard. **You always have the final say** — the agent accelerates authoring, it does not replace your editorial judgment.
+
+**What it means for you:** because the agent plans and reviews on its own, the questions you see have already passed a first round of quality control. You are reviewing a curated draft, not raw output.
+
+## Software terms, translated
+
+Here is the vocabulary you may run into, and what each term means for your day-to-day use.
+
+| Term | What it is | What it means for you |
+| --- | --- | --- |
+| **Agent** | A model wrapped in a step-by-step process with a fixed job. | Results stay on-task and tied to your material. |
+| **Model** | The underlying AI that generates text. | You pick a subject-focused [LearnTerms model](/ai/learnterms-models); choose the one that matches your content. |
+| **Prompt** | The instructions sent to the model. | Your **custom prompt** and **focus notes** steer what the agent emphasizes. |
+| **Tool** | A capability the agent can call, like fetching your source notes. | The agent can only read the document and pages you selected — nothing else. |
+| **Grounding** | Tying every answer to the provided source. | Questions reflect your material; the agent will not invent outside facts. |
+| **Plan** | The coverage strategy the agent writes first. | A preview of how questions will be spread across your topics. |
+| **Candidate** | A drafted question not yet saved. | Something to review and approve, never auto-published. |
+| **Review** | The agent grading its own drafts. | Weak questions are caught before they reach you. |
+| **Duplicate check** | Comparing new questions to ones already in the module. | The agent hides or blocks questions too similar to existing ones. |
+| **Loop / steps** | Repeating the plan-draft-review cycle. | The progress timeline you watch during generation. |
+| **Token** | A unit of text the model processes. | Usage is measured in tokens; heavy use can hit limits. |
+| **Rate limit** | A cap on how much you can generate in a window. | Protects the service; you may need to wait or generate smaller batches. |
+
+## Why the agent is deliberately limited
+
+A few guardrails are built in on purpose:
+
+- **It only reads what you select.** The agent has no access outside your chosen document and page range.
+- **It cannot cite the source out loud.** Questions and rationales explain the clinical or factual reasoning directly — you will not see phrases like "according to the notes."
+- **It blocks near-duplicates.** Questions too similar to ones already in the module are filtered out.
+- **It respects usage limits.** Generation is capped per user and across the service to keep things fair and stable.
+
+**What it means for you:** these limits are why LearnTerms generation feels focused and exam-relevant instead of like a chatbot. Working *with* them — clean source, clear focus notes, smaller batches — gets you better questions faster.
+
+## Getting the best results
+
+1. **Feed it good source.** Most "bad generation" is really a source-material problem. Clean your chunks first.
+2. **Pick the matching model.** Treat model choice as a relevance decision — see [LearnTerms generation models](/ai/learnterms-models).
+3. **Use focus notes.** They outrank the default plan, so use them to set angle, difficulty, and what to avoid.
+4. **Generate smaller batches first.** Review, learn what works, then scale up.
+5. **Edit after insertion.** Keep the strong questions, refine the rest — don't accept blindly.
