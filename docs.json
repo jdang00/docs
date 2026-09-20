@@ -52,6 +52,7 @@
               "admin/class-and-module-management",
               "admin/content-library",
               "admin/question-studio",
+              "admin/source-context",
               "admin/class-progress-and-role-management"
             ]
           },
