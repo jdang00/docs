@@ -1,100 +1,125 @@
 ---
 title: "Question Studio"
-description: "Generate questions from source material and send them into the right LearnTerms module."
+description: "Generate source-grounded draft questions from selected pages or topics and save them to a module."
 ---
 
 ## What Question Studio does
 
-Question Studio is the generation surface for admins and contributors. It lets you choose a semester, class, and module, pull source material from the Content Library, generate questions with a LearnTerms model, review the output, and bulk insert selected questions into the chosen module.
+**Question Studio** turns a processed Content Library document into draft multiple-choice questions for a specific module through a structured, source-bounded authoring workflow.
 
-It is not a free-form chatbot. It is a structured generation workflow.
+You choose:
 
-## Destination comes first
+- the source document
+- the pages or mapped topics the agent may read
+- the destination semester, class, and module
+- the number and mix of questions
+- optional focus notes
 
-The first part of the screen asks you to choose where generated questions should go:
+Question Studio plans the run, drafts questions in parallel, checks the results, and gives you a review workspace. Nothing is published automatically.
 
-1. Semester
-2. Class
-3. Module
+## Start a question run
 
-This ordering matters because LearnTerms generation is not useful without a destination. The app is designed to place generated questions directly into a module, not leave them floating in a detached draft space.
+Open **Admin → Question Studio**, then complete the setup sentence.
 
-<Note>
-For the updated Pages/Topics flow and context meter, see [Source context](/admin/source-context). That flow is currently in development; the controls below describe the earlier workflow.
-</Note>
+<Steps>
+  <Step title="Choose Pages or Topics">
+    **Pages** is the default for a new user. Choose exact pages when you want tight control or when topic mapping is unavailable. Choose **Topics** to work from the reusable topic map prepared during document processing.
+  </Step>
+  <Step title="Attach a document">
+    Select a document from your cohort's Content Library. A document must finish enough of the processing pipeline for Question Studio to read its extracted text. Topic mode also requires a completed topic map.
+  </Step>
+  <Step title="Set the source scope">
+    In **Pages**, select thumbnails, use **Select all**, or enter ranges such as `1–12, 24, 38–45`. In **Topics**, search the mapped topics and keep only the concepts you want covered.
+  </Step>
+  <Step title="Choose the destination">
+    Select the semester, class, and module where accepted drafts should be saved. Question Studio requires the destination before generation begins.
+  </Step>
+  <Step title="Set the question mix">
+    Request between `1` and `30` questions, then divide the total among **Learn**, **Clinical**, and **Critical thinking**.
+  </Step>
+  <Step title="Add focus notes and generate">
+    Use the optional notes field for priorities such as key definitions, common misconceptions, or areas to avoid. Click **Generate questions** when the source, scope, destination, and mix are ready.
+  </Step>
+</Steps>
 
-## Source material selection
+## Question types
 
-Question Studio works with selected text. In practice, that usually comes from chunks in the Content Library.
+| Type | What it asks the learner to do |
+| --- | --- |
+| **Learn** | Reinforce a source-supported fact, relationship, definition, or distinction. |
+| **Clinical** | Apply the source to a focused patient scenario, finding, or clinical decision. |
+| **Critical thinking** | Combine source-supported relationships, interpret evidence, or weigh meaningful alternatives. |
 
-The built-in document browser lets you:
+Question Studio creates clinical questions only when the selected source supports clinical application. Insufficient evidence can produce fewer usable questions than requested.
 
-- browse cohort-scoped documents
-- search by title
-- open a document
-- select chunk text to feed into generation
+## Pages and topics
 
-The selected text is then summarized into character and word counts on the generation panel.
+Use **Pages** when:
 
-## Generation controls
+- only a specific lecture section belongs in the run
+- the topic map is unavailable or needs attention
+- you want to inspect the exact extracted text used for generation
 
-Current generation controls include:
+Use **Topics** when:
 
-- product model selection
-- question count of `5`, `10`, or `15`
-- optional custom prompt
+- the document has completed the **Mapped** stage
+- you want reusable concept-level selection across a large document
+- you want to search topic titles, summaries, or key terms
 
-The product-facing model options currently are:
+Question Studio remembers your Pages/Topics preference for your account in the same browser. Learn more in [Source context](/admin/source-context).
 
-- `swift-general`
-- `swift-optometry`
-- `swift-pharmacy`
+## Review the run
 
-All of them currently resolve to the same underlying model with different focus settings. The product docs should explain the product meaning, not just the backend mapping.
+Candidates appear as workers finish, so you can start reading before the full run completes. The review workspace lets you:
 
-## Source-text quality
+- browse candidates from the question list
+- inspect the stem, options, correct answer, rationale, and source pages
+- open source citations and quoted evidence when available
+- see warnings for ambiguity, duplication risk, or limited checking
+- edit a candidate after the run is ready
+- select all, select none, or keep only individual candidates
 
-The generation panel explicitly tracks character count and gives rough quality feedback based on the amount of selected text.
+Question Studio can reject or cut a candidate that is unsupported, ambiguous, duplicative, or structurally weak. The requested count is a target, and the final review set can be smaller.
 
-Current behavior treats:
+For the complete review flow, see [Reviewing a Question Studio run](/admin/question-studio-reviewing-runs).
 
-- empty text as unusable
-- very short text as low quality
-- very large text as over the preferred cap
+## Save drafts, then publish separately
 
-The current soft cap shown in the component is `3500` characters.
+Click **Save drafts to _module_** to insert the selected candidates. Saved candidates:
 
-This is worth documenting because a lot of “bad generation” is actually a source-material problem.
+- enter the destination module with `draft` status
+- stop being selectable in the current run
+- remain private until someone publishes them from the module
+- retain their generation and source provenance
 
-## Reviewing generated output
+Use **Open module** after saving to review the inserted drafts in context. Publishing is a separate editorial decision.
 
-After generation, the user can:
+<Warning>
+Starting a new run discards all unsaved candidates from the current run. Question Studio asks for confirmation when unsaved drafts remain.
+</Warning>
 
-- inspect the generated questions
-- select which ones to keep
-- remove individual questions
-- discard the whole batch
-- regenerate from the same source
-- add only selected questions to the destination module
+## Limits and common blockers
 
-This review step is important. Generated output is meant to accelerate authoring, not replace editorial judgment.
-
-## Limits and errors
-
-Question generation can fail for several operational reasons:
-
-- no destination module is selected
-- no source material is selected
-- usage limits are reached
-- module limits are reached when saving
-
-The UI distinguishes between ordinary errors and daily-limit style errors, which is useful to explain in contributor docs.
+- A run can request up to `30` questions.
+- A module can contain up to `150` questions.
+- Generation is subject to per-user and service-wide limits.
+- A document must have readable extracted text.
+- Topic mode requires mapped topics; switch to **Pages** when mapping is unavailable.
+- If the source changes during a run, start a new run so citations and page selection remain consistent.
 
 ## Recommended workflow
 
-1. Clean the source chunks first
-2. Choose the exact destination module
-3. Pick the model that matches the subject matter
-4. Generate a smaller batch first
-5. Select only the questions worth keeping
-6. Edit weak questions after insertion rather than accepting them blindly
+1. Confirm the document is **Ready** in Content Library.
+2. Start with a focused page range or a small set of topics.
+3. Choose only question types the source can support.
+4. Add concise focus notes.
+5. Review source support, the correct answer, distractors, and rationale.
+6. Edit weak-but-fixable candidates.
+7. Save only the drafts you would be willing to publish after a final module review.
+
+## Related guides
+
+- [Content Library](/admin/content-library)
+- [Content processing pipeline](/admin/content-processing-pipeline)
+- [Source context](/admin/source-context)
+- [Reviewing a Question Studio run](/admin/question-studio-reviewing-runs)

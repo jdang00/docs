@@ -51,9 +51,12 @@
               "admin/admin-dashboard",
               "admin/class-and-module-management",
               "admin/content-library",
+              "admin/content-processing-pipeline",
               "admin/question-studio",
               "admin/source-context",
-              "admin/class-progress-and-role-management"
+              "admin/question-studio-reviewing-runs",
+              "admin/class-progress-and-role-management",
+              "admin/reading-progress-analytics"
             ]
           },
           {

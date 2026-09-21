@@ -1,38 +1,50 @@
 ---
-title: "LearnTerms generation models"
-description: "Choose the right LearnTerms model for question generation."
+title: "LearnTerms generation model"
+description: "Understand how LearnTerms manages the model behind Question Studio and which controls you use instead."
 ---
 
-## What these models are
+## Model selection is managed by LearnTerms
 
-LearnTerms generation models are product-facing modes for AI-assisted question creation.
+Question Studio currently uses a centrally managed LearnTerms generation model. There is no model picker in the curator workflow.
 
-They are part of the LearnTerms generation layer and are meant to hide raw model complexity behind subject-aware choices that make sense to contributors.
+This keeps the source, planning, drafting, checking, usage, and telemetry contracts consistent across cohorts. LearnTerms can update the underlying provider configuration without asking curators to understand vendor model names.
 
-## Available models
+## What you control
 
-| Model | Focus | Best for |
-| --- | --- | --- |
-| `swift-general` | General health sciences | Mixed or interdisciplinary content |
-| `swift-optometry` | Ocular and vision science | Eye care, ophthalmology, and vision topics |
-| `swift-pharmacy` | Pharmacology and therapeutics | Drug mechanisms, therapies, and clinical medication content |
+Instead of selecting a model, you control the parts that most directly shape the questions:
 
-## How to choose
+- **Pages or Topics** — the evidence the agent may use
+- **Question count** — from `1` to `30` per run
+- **Question mix** — **Learn**, **Clinical**, and **Critical thinking**
+- **Focus notes** — priorities, misconceptions, or boundaries for the run
+- **Destination** — the semester, class, and module for saved drafts
+- **Curation** — editing, selection, saving, and eventual publishing
 
-Pick the model that matches the course or material you are working with.
+## Why question mix matters
 
-- Use `swift-general` when the material spans multiple domains.
-- Use `swift-optometry` when the content is specifically vision or ocular focused.
-- Use `swift-pharmacy` when the source material centers on therapeutics, mechanisms, and medication use.
+Each question type defines an evidence and reasoning contract.
 
-## What the generation layer is trying to do
+- **Learn** asks for direct reinforcement of a source-supported concept.
+- **Clinical** requires source evidence that supports a relevant clinical application.
+- **Critical thinking** requires at least two supported relationships that must be combined.
 
-The LearnTerms layer is not meant to act like a generic chatbot. It is designed to produce study questions that better match course context, academic domain, and exam style.
+When the source lacks support for a requested type, Question Studio should abstain or cut the candidate.
 
-That means the model choice should stay close to the subject matter, not just user preference.
+## Why source quality matters more than a model label
 
-## Practical guidance
+Missing or garbled extraction produces missing evidence for the generation model. Before tuning focus notes or increasing the batch size:
 
-- Start with the model that most closely matches the module topic.
-- Use stronger source chunks before you try to tune prompts.
-- Treat model choice as a relevance decision, not a creativity setting.
+1. Check the Content Library preview.
+2. Compare extracted text with the original PDF.
+3. Narrow the page or topic selection.
+4. Match the question mix to the evidence.
+
+## Operational telemetry
+
+Question Studio records run-level usage such as calls, tokens, duration, and spend when available. These values help monitor reliability and cost. Factual correctness and educational quality require source review.
+
+## Related guides
+
+- [What is an AI agent?](/ai/what-is-an-ai-agent)
+- [Question Studio](/admin/question-studio)
+- [Content processing pipeline](/admin/content-processing-pipeline)

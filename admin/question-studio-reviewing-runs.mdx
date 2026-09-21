@@ -1,0 +1,92 @@
+---
+title: "Reviewing a Question Studio run"
+description: "Inspect live candidates, edit source-grounded drafts, read run diagnostics, and save selected questions safely."
+---
+
+## Review while the run is working
+
+Question Studio shows candidates as individual workers finish, so you can begin reading the first question while the run continues.
+
+The run header shows the destination, source scope, question mix, current phase, and overall progress. Pending slots remain visible until they produce a candidate or are cut.
+
+## Inspect each candidate
+
+Select a question from the left-hand list. On smaller screens, it opens in a modal.
+
+Review:
+
+- question type and topic
+- stem and options
+- marked correct answer
+- rationale
+- cited pages and quoted source evidence
+- duplicate or quality warnings
+
+Use the up and down arrow keys to browse and the space bar to select or clear the active candidate while focus is outside a form control.
+
+## Understand automated checks
+
+Question Studio applies source, answer-structure, and duplicate checks. Depending on the run path, a candidate may also receive an independent model review.
+
+When a card says that only local evidence and structure checks ran, manually verify correctness and distractor quality before publishing. Automated checks reduce obvious failures, while content expertise supplies the final judgment.
+
+## Edit a candidate
+
+After the run is ready, click the edit control in the inspector to change:
+
+- the stem
+- answer options
+- the correct option
+- the rationale
+
+Apply or cancel the edit before saving drafts. Curator edits are recorded without replacing the original generation and source provenance.
+
+## Select what to keep
+
+Use the checkbox on each candidate, or choose **All** or **None** above the list. A selected candidate is queued to save. Publication remains a separate module action.
+
+Candidates that Question Studio cuts appear in the run details with a reason when one is available. Common reasons include weak source support, ambiguity, duplication, or an unsupported requested question type.
+
+## Read run details
+
+The run diagnostics summarize operational information such as:
+
+- drafted versus planned questions
+- kept and cut candidates
+- model calls and failures
+- tokens and estimated spend
+- coverage across planned topics
+- the activity timeline
+
+Cost values can be partial or estimated. Use them for operational monitoring; evaluate quality through source and content review.
+
+## Save selected drafts
+
+When the run is ready, click **Save _n_ drafts to _module_**. Question Studio saves only selected, unsaved candidates with `draft` status.
+
+After saving:
+
+- the saved candidates are labeled **Saved**
+- they can no longer be selected again in that run
+- **Open module** takes you to the destination and highlights the generated drafts
+- publishing remains a separate action in the module
+
+## Start another run safely
+
+Use **New run** or **Start a new run** after you have saved what you want. If unsaved candidates remain, Question Studio asks whether to keep reviewing or discard them.
+
+## Final publishing checklist
+
+Before publishing from the module, confirm:
+
+1. The correct answer is unambiguous.
+2. The rationale explains the relationship behind the answer.
+3. Every required fact is supported by the cited source.
+4. Distractors are plausible without becoming alternate correct answers.
+5. The question adds a distinct learning target to the module.
+
+## Related guides
+
+- [Question Studio](/admin/question-studio)
+- [Source context](/admin/source-context)
+- [Reviewing and curating questions](/contributors/reviewing-and-curating-questions)

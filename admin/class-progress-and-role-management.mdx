@@ -1,164 +1,124 @@
 ---
 title: "Class progress and role management"
-description: "Use the progress dashboard to monitor engagement, inspect student details, and handle roles with the right guardrails."
+description: "Use the live progress workspace to monitor coverage, inspect modules and students, review Studio runs, and manage roles safely."
 ---
 
-## What this area is for
+## Open Class Progress
 
-The **Class Progress** area is the admin view for answering two practical questions:
+Choose **Class Progress** from the admin dashboard or open `/admin/progress`.
 
-1. Is the cohort using LearnTerms in a healthy way?
-2. Does the right person have the right level of access?
-
-That makes this page operational, not just analytical.
-
-## Where to find it
-
-Open `/admin/progress` from the admin dashboard.
-
-The page is organized into three tabs:
+The workspace has four views:
 
 - **Overview**
-- **Module Analytics**
+- **Classes**
 - **Students**
+- **Studio**
 
-Each one answers a different admin question.
+The URL preserves the selected view, filters, class, and module so drill-downs remain navigable.
 
-## The overview tab
+## Overview
 
-The overview tab is your fast pulse check. It surfaces cohort-wide numbers such as:
+The overview is a cohort pulse check. Its top metrics are:
 
-- total students
-- total questions
-- total modules
-- active learners
+| Metric | Meaning |
+| --- | --- |
+| **Students in cohort** | Current cohort members returned to the workspace. |
+| **Active this week** | Tracked students with recorded activity in the last seven days. |
+| **Median coverage** | The median share of the question bank tried by tracked students. |
+| **Not started** | Tracked students with no questions tried. |
 
-This is useful when you want to know whether the content library and question bank are actually turning into student activity.
+The **Coverage distribution** groups students into **Not started**, **Under 25%**, **25–74%**, and **75–100%**. Select a band to open the matching student list.
 
-## How to read active learners
+The overview also shows:
 
-In the current app, active learners are based on whether students have interacted with questions.
+- **Least explored modules**, ranked by low question coverage
+- students with zero questions tried
+- students who started but have been inactive for at least 30 days
+- recent student activity
 
-That means this metric is good for:
+<Warning>
+Coverage is the share of available questions tried. Accuracy, mastery, and exam performance require separate evidence.
+</Warning>
 
-- adoption
-- engagement
-- rough momentum
+See [Reading progress analytics](/admin/reading-progress-analytics) for metric definitions and interpretation.
 
-It is not the same thing as mastery. A cohort can have high activity and still need better content or better sequencing.
+## Classes
 
-## The module analytics tab
+The **Classes** view is a curriculum explorer.
 
-Module Analytics is where you move from broad health to content diagnosis.
+1. Filter classes by semester or search by class name or code.
+2. Open a class to see its modules.
+3. Open a module for detailed participation and question-level coverage.
 
-Use it when you want to ask:
+Each module detail shows:
 
-- which modules are actually getting used
-- where students are struggling
-- whether a module has weak spots that deserve curation attention
+- **Participation** — students who tried at least one question in the module
+- **Question coverage** — completed student–question pairs out of all possible pairs
+- **Flagged questions** and total student flags
+- questions nobody has tried
+- recent activity
 
-This tab is a better fit for content decisions than the overview numbers alone.
+The module detail tabs are:
 
-## The students tab
+- **Questions** — paginated question coverage, flags, and last interaction
+- **Participants** — recently active participants and their tried/flagged counts
+- **Flags** — up to 20 questions with the most student flags
+- **Activity** — up to 20 recent student-question interactions
 
-The **Students** tab is your roster plus individual drill-down view.
+Use **Manage module** to move from analytics back into the authoring surface.
 
-It is useful when you need to:
+## Students
 
-- search for a student quickly
-- see who is active versus inactive
-- open a student detail modal
-- inspect progress by semester, class, and module
+The **Students** view supports:
 
-This tab is especially helpful when a student says, "I have been using LearnTerms a lot," and you need to distinguish between high effort, scattered effort, and very little real interaction.
+- search by name, email, or username
+- sorting by recent activity, highest coverage, or name
+- filtering by **Active this week**, **Quiet for 30+ days**, **Not started**, or a selected coverage band
+- coverage, questions tried, last-active time, join date, and role badges
 
-## What the student detail view shows
+Open a student to see their identity, subscription badge when applicable, overall question activity, flagged count, and progress by semester, class, and module.
 
-The student detail modal is more than a profile card. It combines:
+## Studio
 
-- basic identity details
-- current role badges
-- Pro status indicator when relevant
-- overall progress numbers
-- a breakdown by semester, class, and module
+The **Studio** view monitors recent Question Studio activity for the cohort.
 
-This lets you answer operational questions without hopping across several pages.
+Summary metrics include:
 
-## How to use the progress breakdown
+- runs this week and failures
+- questions kept and saved into modules
+- spend and cost per kept question when cost data is available
+- median run duration
 
-The class and module breakdown is strongest when you use it to spot patterns:
+The recent-runs table shows the source document, destination module, curator, drafted versus requested count, kept count, cost, duration, and status. Cost can be approximate when provider billing data is estimated.
 
-- one student is active only in one class
-- a whole module is getting touched but not mastered
-- flagged counts are unusually high in a narrow section
-- a student has started many modules but finished few
+## Manage roles from a student profile
 
-Those patterns are usually more actionable than the top-line progress percentage by itself.
+Role controls appear only when both the viewer and target are eligible.
 
-## Role management rules
+### Admins
 
-Role management is intentionally constrained.
+Admins can switch another user in the same cohort between:
 
-The current practical roles are:
+- **Student**
+- **Curator**
 
-- student
-- curator
-- admin
-- dev
+The admin role editor is limited to other students and curators in the same cohort. Self-management, admin/developer targets, and `admin` or `dev` assignments are excluded.
 
-### What admins can do
+### Developers
 
-Admins can manage:
+Developers can use the profile UI to assign **Student**, **Curator**, or **Admin** to users other than themselves. Developer roles are handled outside this UI for security.
 
-- students
-- curators
+### Curators and students
 
-Admins cannot:
+Curators and students receive no role-management controls.
 
-- promote users to `admin`
-- promote users to `dev`
-- manage other admins
-- manage devs
-- change their own role
+## Connection state
 
-### What devs can do
-
-Devs have the highest level of operational access and can bypass the admin limits above.
-
-That guardrail is deliberate. LearnTerms treats role changes as sensitive operations, not casual toggles.
-
-## When to promote someone to curator
-
-Promote a student to **curator** when they need to:
-
-- edit questions
-- work in content workflows
-- support generation and curation
-- help manage authored material without taking on full cohort operations
-
-Curator is the right role for content work. It is not a shortcut to broad admin authority.
-
-## When to keep someone as a student
-
-Keep someone as a student when they only need:
-
-- class access
-- module study
-- custom tests
-- personal progress and badge activity
-
-Do not promote access just because someone is highly engaged. Promote when the workflow truly requires it.
-
-## Good admin habits
-
-- Use **Overview** for pulse, not diagnosis.
-- Use **Module Analytics** when a content area feels weak.
-- Use the student modal when you need actual context, not assumptions.
-- Promote users only for a real workflow need.
-- Keep role changes narrow and intentional.
+The workspace uses live data. If its WebSocket connection drops after connecting, LearnTerms warns that displayed data may be out of date and resumes updates automatically after reconnection.
 
 ## Related guides
 
 - [Admin dashboard](/admin/admin-dashboard)
-- [Class and module management](/admin/class-and-module-management)
+- [Reading progress analytics](/admin/reading-progress-analytics)
+- [Question Studio](/admin/question-studio)
 - [Roles and permissions](/platform/roles-and-permissions)

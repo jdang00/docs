@@ -5,15 +5,15 @@ description: "How LearnTerms is structured across auth, app routes, Convex, uplo
 
 ## System overview
 
-LearnTerms is a SvelteKit application backed by Convex for data and server functions. Authentication flows through Clerk, file uploads use UploadThing, hosting is handled by Vercel, and AI-assisted generation sits on top of a product-facing model layer.
+LearnTerms is a SvelteKit application backed by Convex for data and server functions. Authentication flows through Clerk, source PDFs are stored in R2, hosting is handled by Vercel, and AI-assisted generation runs through a managed LearnTerms agent workflow.
 
 At a high level:
 
 - SvelteKit renders the app and route structure
 - Clerk manages sign-in and identity
 - Convex stores app data and powers mutations, queries, and actions
-- UploadThing handles PDF and image uploads
-- The generation layer maps LearnTerms product modes to an underlying model
+- R2 stores Content Library source PDFs
+- The generation layer plans, drafts, checks, and records source-grounded question runs
 
 ## Core data model
 
@@ -54,7 +54,7 @@ User progress is tracked separately so LearnTerms can remember:
 Question and content authoring use several additional tables:
 
 - `contentLib` for uploaded source documents
-- chunk-related records for processed document content
+- page-aware extraction artifacts, search entries, and topic maps for processed documents
 - `questionMedia` for image attachments
 - `tags` and `moduleTags` for class-scoped grouping
 
@@ -74,34 +74,28 @@ This alignment is worth documenting because it helps contributors understand whe
 
 Clerk is wired into the SvelteKit server hooks. The app protects `/admin` routes by checking the authenticated user and then resolving their LearnTerms role from Convex.
 
-If the user is not authenticated, they are redirected to sign in. If they are authenticated but do not have an allowed role, they are redirected away from admin pages.
+Unauthenticated users are redirected to sign in. Authenticated users need an allowed role to enter admin pages.
 
-That is why role docs are not just policy docs. They are route-access docs.
+Role documentation defines both policy and route access.
 
-## Upload pipeline
+## Source-document pipeline
 
-UploadThing is configured with several routes:
+Content Library PDFs upload to R2 and then move through four background stages:
 
-- `pdfUploader` for source PDFs
-- `questionMediaUploader` for question images
-- `imageUploader` for generic image upload use
+1. **Stored**
+2. **Extracted**
+3. **Indexed**
+4. **Mapped**
 
-Current limits in code include:
+The current source-PDF limits are `30 MB` and `150` pages. Extraction produces page-aware text and layout artifacts, indexing makes that content retrievable, and mapping creates reusable topics for Question Studio.
 
-- PDFs: `16MB`, one file per upload
-- Question images: `8MB`, one image per upload
-
-The question media layer also enforces image-only uploads and stores metadata such as file size, original file name, and whether the image should appear only on the solution view.
+Question images use a separate media workflow and remain attached to question records. The Content Library pipeline handles source PDFs.
 
 ## Generation layer
 
-LearnTerms exposes generation through product-facing model IDs:
+Question Studio uses a centrally managed LearnTerms generation model. The curator interface exposes selected pages or topics, the **Learn / Clinical / Critical thinking** mix, focus notes, and the destination module.
 
-- `swift-general`
-- `swift-optometry`
-- `swift-pharmacy`
-
-Today those all resolve to `gemini-3-flash-preview` with different focus settings. This is important because the product docs should describe the experience in LearnTerms terms, while technical docs should still acknowledge the underlying mapping.
+Each run stores durable job state, candidates, source citations, checks, activity, and usage telemetry. Selected candidates are saved to the module as drafts; publishing remains a separate editorial action.
 
 ## Why this architecture matters for docs
 
@@ -111,6 +105,6 @@ The docs should reflect the actual boundaries in the codebase:
 - questions are module-scoped
 - admin access is role-gated
 - uploads and generation have explicit limits
-- student progress is persistent, not session-only
+- student progress persists across sessions
 
-If the documentation follows those boundaries, it will stay aligned with the product instead of drifting into generic documentation language.
+Following those boundaries keeps the documentation aligned with the product.

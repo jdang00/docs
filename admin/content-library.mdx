@@ -1,72 +1,115 @@
 ---
 title: "Content Library"
-description: "Upload source documents, preview them, and prepare clean material for question generation."
+description: "Upload cohort source documents, monitor processing, preview extracted content, and prepare material for Question Studio."
 ---
 
 ## What the Content Library is
 
-The **Content Library** is where you keep the source material your cohort generates questions from. You upload documents, preview them, organize them, and hand the good ones off to **Question Studio**.
+The **Content Library** is the cohort-scoped source workspace for Question Studio. It stores the original PDF, extracted text and layout, search index, and reusable topic map for each document.
 
-Think of it as the shelf between your raw course files and the questions your cohort studies. The cleaner the material on that shelf, the better the questions that come out of it.
+The library is cohort-scoped. Staff see documents for their own cohort; developers can work across cohorts when their role permits it.
 
-Everything in the library is **cohort-scoped** — you see your cohort's documents, not the whole platform's.
+## Upload a document
 
-## Uploading a document
+Open **Admin → Content Library** and click **Add file**. Drag a file into the uploader or browse for it.
 
-Click **Add file** to open the uploader. You can either **drag and drop** a file onto the panel or browse for one.
+Current upload limits are:
 
-- Uploads are **PDF** files.
-- The size limit is **50MB** per file.
-- A progress bar shows the upload as it runs.
-- If a file is the wrong type or too large, you'll see a clear message explaining why.
+- PDF only
+- up to `30 MB`
+- up to `150` pages
 
-Once a file finishes uploading, LearnTerms processes it in the background — reading the text, pulling out tables and figures, and getting it ready to preview and use. Large files can take a little longer to finish processing.
+The upload progress bar covers the transfer to storage. After that finishes, background processing continues through extraction, indexing, and topic mapping. You can leave the page after the job is queued.
 
-## Browsing your library
+<Note>
+Long or image-heavy PDFs can take several minutes. After upload, the document continues processing before topic-based generation becomes available.
+</Note>
 
-The toolbar gives you a few ways to find what you need:
+## Understand document readiness
 
-- **Search** — type in **Search files...** to filter by name.
-- **Sort** — order documents by **Recently updated**, **Name (A-Z)**, **Oldest first**, **Largest first**, or **File type**.
-- **Grid or list view** — switch layouts with the view toggle, whichever you find easier to scan.
+Each document moves through four stages:
 
-Each document shows a type badge so you can tell at a glance what it is: **PDF**, **Slides**, **Image**, or **Document**, along with its size and when it was last updated.
+1. **Stored** — the original PDF is saved.
+2. **Extracted** — text, tables, layout, and page boundaries are prepared.
+3. **Indexed** — the extracted material is searchable by the generation system.
+4. **Mapped** — the document is organized into reusable topics.
 
-## Opening and previewing a document
+Cards and list rows show live processing status. A green check means all four stages are complete. Open **Properties** for the full stage-by-stage view or to resume a failed job.
 
-Open any document to bring up its detail drawer, which has three tabs:
+See [Content processing pipeline](/admin/content-processing-pipeline) for status details and recovery steps.
+
+## Find a document
+
+The toolbar supports:
+
+- **Search files** by title, description, or original file name
+- sorting by **Recently updated**, **Name (A–Z)**, **Oldest first**, **Largest first**, or **File type**
+- **Grid** and **List** views
+
+Grid cards emphasize file readiness and visual scanning. List view adds explicit page, size, and updated columns.
+
+## Open the document drawer
+
+Select a document to open its detail drawer. Expand it to fullscreen when you need more room.
 
 <Tabs>
   <Tab title="Preview">
-    A clean, readable rendering of the document's content — formatted text, **tables**, and math all displayed in place. Tables can be opened **fullscreen** when they're too wide to read comfortably. Slide-style documents can be viewed in a **deck (presentation) mode** that shows them slide by slide.
+    Shows the extracted Markdown that Question Studio can read. LearnTerms renders headings, tables, and math; wide tables can open fullscreen. Use **View as slide deck** to render slide-like source as a presentation, or switch back to notes.
+
+    The preview can be clipped for speed. Preview length and indexed-source completeness are separate states.
   </Tab>
   <Tab title="Source">
-    The underlying extracted text from the document. This is the exact material that question generation reads from, so it's the best place to check whether the document came through cleanly.
+    Shows the original stored PDF. Use this view to compare the extraction with the actual page layout. The original page image helps you verify the document, but Question Studio relies on extracted text for generation.
   </Tab>
   <Tab title="Properties">
-    Details about the file itself — name, type, size, and dates.
+    Shows processing stages, file metadata, timestamps, extraction details, index identifiers, and storage metadata. If processing needs attention, use **Resume processing** after reviewing the displayed error.
   </Tab>
 </Tabs>
 
-You can also expand the panel to **fullscreen** for a closer look, or open the original file in a new tab.
+## Manage a document
 
-## Keeping the library clean
+From the card or drawer you can:
 
-A few simple habits keep your library useful:
+- **Rename** the library title without changing the original file
+- **Open** the original PDF in a new tab
+- **Remove** the document after confirming the destructive action
 
-- **Give documents clear names.** A descriptive title makes the right file easy to find later.
-- **Check the Source tab after uploading.** If the extracted text looks garbled or incomplete, that document will produce weak questions — fix or replace it before using it.
-- **Delete what you don't need.** Use the delete option (you'll be asked to confirm) to remove outdated or duplicate files so the library stays focused.
+Use descriptive titles and remove duplicates. Clear naming makes source selection much easier in Question Studio.
 
-## Why this matters for generation
+## Check quality before generation
 
-The Content Library is the foundation that **Question Studio** builds on. When you generate questions, the agent reads only from the document and pages you select here — it can't pull in anything outside your material.
+Before using a document:
 
-That means most "bad generation" is really a source-material problem. A clean, well-structured document in the library leads directly to clearer, more accurate questions for your cohort. To see how that source feeds into generation, read [What is an AI agent?](/ai/what-is-an-ai-agent) and [Question Studio](/admin/question-studio).
+1. Wait for the processing status you need.
+2. Compare **Preview** with **Source** on representative pages.
+3. Check tables, equations, headings, and any image-heavy sections.
+4. If essential visual facts are missing from extracted text, narrow the run to readable pages or replace the PDF with a cleaner export.
+5. Use topic mode only after **Mapped** is complete; otherwise use page mode.
 
-## Common questions
+## Common problems
 
-- **I can't upload a file.** Confirm it's a PDF and under 50MB, and that you have an admin or contributor role in the cohort.
-- **My document looks empty or messy in Preview.** The original file may be image-only or poorly formatted. Check the **Source** tab; if the text didn't extract well, re-export a cleaner version and re-upload.
-- **A document isn't showing up in Question Studio.** It needs to finish processing first. Give large files a moment, then try again.
-- **I don't see another cohort's files.** That's expected — the library only shows your own cohort's documents.
+### The upload button stays disabled
+
+Confirm the file is a PDF, no larger than `30 MB`, and your account belongs to a cohort with staff access.
+
+### The document is still processing
+
+Open **Properties** to identify the active stage. The job continues in the background, so refreshing or leaving the page is unnecessary.
+
+### Preview is empty or incomplete
+
+Compare it with **Source**. Image-only scans and complex slide exports often provide too little extractable text for reliable questions.
+
+### The document is missing from Question Studio
+
+Confirm it belongs to the same cohort and has completed extraction and indexing. Topic mode additionally requires mapping.
+
+### Topic mapping failed
+
+Open **Properties** for the error and resume processing. You can still use **Pages** if readable extracted pages and the search index are available.
+
+## Related guides
+
+- [Content processing pipeline](/admin/content-processing-pipeline)
+- [Question Studio](/admin/question-studio)
+- [Source context](/admin/source-context)

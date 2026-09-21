@@ -1,0 +1,77 @@
+---
+title: "Content processing pipeline"
+description: "Understand the Stored, Extracted, Indexed, and Mapped stages behind each Content Library document."
+---
+
+## Why processing has four stages
+
+Uploading preserves the original file, but Question Studio needs more than a PDF URL. LearnTerms prepares page-aware text, makes it searchable, and builds a reusable topic map before the document is fully ready.
+
+The **Properties** tab shows all four stages.
+
+## Stored
+
+**Stored** means the original PDF is safely available in the Content Library.
+
+At this point you can open the original source. Generation becomes available after readable extraction and indexing.
+
+## Extracted
+
+**Extracted** means LearnTerms has processed the PDF into page-aware text and layout artifacts.
+
+Extraction powers:
+
+- the Markdown preview
+- page text in the Question Studio picker
+- table and math rendering when the source supports it
+- source-page citations
+
+Always compare important pages with the original PDF. Image-only diagrams may be visible in **Source** but absent from extracted text.
+
+## Indexed
+
+**Indexed** means the extracted material is available to the source-retrieval system used during question generation.
+
+Page-based runs require readable extracted and indexed content. If indexing fails, open **Properties**, review the error, and click **Resume processing**.
+
+## Mapped
+
+**Mapped** means LearnTerms has organized the indexed document into reusable topics with page references, summaries, key terms, objectives, and supported question types.
+
+Mapped documents unlock **Topics** mode in Question Studio. Review the selected topics and their page scope before generating.
+
+## Status messages
+
+You may see messages such as:
+
+- **Queued for extraction**
+- **Extracting text & tables**
+- **Preparing for search**
+- **Queued for topic mapping**
+- **Mapping topics**
+- **Processing needs attention**
+- **Topic mapping needs attention**
+- **Ready**
+
+The status updates live. Background work continues after you leave the page.
+
+## Recover from a failed stage
+
+1. Open the document.
+2. Select **Properties**.
+3. Read the processing error and identify the failed stage.
+4. Click **Resume processing**.
+5. Wait for the stage indicator to update.
+6. Recheck **Preview** before generating.
+
+If topic mapping alone fails, a page-based run may still work when extraction and indexing are complete. Switch Question Studio to **Pages** and select a focused range.
+
+## A green check means ready
+
+The green check on a card or list row confirms completion of all four stages. Extraction fidelity still requires comparison between **Preview** and **Source**.
+
+## Related guides
+
+- [Content Library](/admin/content-library)
+- [Source context](/admin/source-context)
+- [Question Studio](/admin/question-studio)

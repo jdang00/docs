@@ -1,69 +1,69 @@
 ---
 title: "Admin dashboard"
-description: "Use the admin dashboard to manage classes, content, generation, and cohort-side workflows."
+description: "Open cohort operations, manage classes by semester, and route into content, generation, and progress workflows."
 ---
 
 ## What the admin dashboard is
 
-The admin dashboard is the operational surface for users with elevated access. It is not just a menu. It is where cohort-specific maintenance and content operations begin.
+The dashboard at `/admin` is the starting point for cohort staff. It combines three workflow shortcuts with semester-aware class management.
 
-Current dashboard entry points include:
+The primary shortcuts are:
 
-- Content Library
-- Question Studio
-- Class Progress
+- **Content Library** — upload and prepare source documents
+- **Question Studio** — generate and review source-grounded draft questions
+- **Class Progress** — explore cohort participation, curriculum coverage, students, and generation runs
 
-The dashboard also exposes class management and ordering tools that students do not need.
+The dashboard itself is a routing and maintenance surface. Detailed analytics live in **Class Progress**.
 
 ## Who can access it
 
-Admin routes are protected in the SvelteKit server hooks. A user must be authenticated and must have a LearnTerms role of:
+Admin routes require an authenticated LearnTerms user with a staff role:
 
 - `curator`
 - `admin`
 - `dev`
 
-Students do not get admin access.
+Backend authorization binds the dashboard and its linked workspaces to the user's permitted cohort, regardless of URL or client-side changes.
 
-## What admins manage here
+## Manage classes by semester
 
-The dashboard is centered on operational tasks:
+The **My Classes** section filters classes by the selected semester. LearnTerms remembers the last semester name you used when possible.
 
-- reviewing class lists by semester
-- reordering classes
-- editing class metadata
-- creating classes
-- deleting classes
-- moving into content and generation workflows
+From this section, authorized users can:
 
-Each of these matters because LearnTerms depends on a clean class and module hierarchy. If the structure is off, every downstream workflow is harder.
+- open a class
+- edit class metadata
+- add a class
+- switch into **Reorder Mode** and drag classes into a new order
+- delete a class after reviewing its module and question counts
 
-## Semester-aware class management
+Class order is saved to the backend and persists across sessions.
 
-The class list is semester-aware. Admins can switch the active semester, and the dashboard filters the visible class list accordingly.
+## Quick Links
 
-This keeps the screen usable even when a cohort has many classes over time.
+Admins and developers can open **Quick Links** to manage cohort shortcuts. Keep links focused on resources students actually need, and use clear labels so the dashboard remains easy to scan.
 
-## Reordering classes
+## Delete classes carefully
 
-Class ordering is persisted, not just dragged locally. When an admin reorders a class, the app updates the stored order value in Convex.
+Deleting a class affects the content hierarchy beneath it. Before confirmation, LearnTerms loads the class's module and question counts so you can judge the impact.
 
-That matters for documentation because display order is part of the authored experience. It is not accidental.
+<Warning>
+Use deletion only for a class that should be removed permanently. Confirm the semester and class identity, then review the displayed content counts before proceeding.
+</Warning>
 
-## Deleting classes carefully
+## Recommended admin sequence
 
-Before class deletion is confirmed, the app can query content counts like:
+1. Select the correct semester.
+2. Confirm classes and their order.
+3. Add or update modules inside the destination class.
+4. Prepare sources in **Content Library**.
+5. Generate and save drafts in **Question Studio**.
+6. Publish only after module-level review.
+7. Use **Class Progress** to see whether students are reaching the new material.
 
-- module count
-- question count
+## Related guides
 
-This is useful operationally because deleting a class is not just deleting a label. It affects the actual content structure tied to that class.
-
-## Best admin habit
-
-The admin dashboard works best when it is treated as a maintenance layer:
-
-1. keep semesters and class ordering clean
-2. verify content is going into the right class
-3. use Question Studio only after the destination structure is correct
-4. review progress data after content changes if needed
+- [Class and module management](/admin/class-and-module-management)
+- [Content Library](/admin/content-library)
+- [Question Studio](/admin/question-studio)
+- [Class progress and role management](/admin/class-progress-and-role-management)

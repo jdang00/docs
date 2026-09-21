@@ -1,44 +1,68 @@
 ---
 title: "Source context"
-description: "Choose enough source material for focused questions and understand the context meter."
+description: "Choose the pages or mapped topics Question Studio may read and keep each run focused."
 ---
 
-<Note>
-The Pages/Topics selector and context meter are part of the updated **Question Studio**, currently in development. This guide applies when those controls are available in your version.
-</Note>
+**Context** is the extracted source material Question Studio may use for a run. Focused context usually produces sharper questions, so select only the material needed for the requested run.
 
-**Context** is the source text Question Studio can use for your questions. Choose material that covers what you want to test; you do not need to fill the bar.
+## Choose Pages or Topics
 
-## Choose your source
+### Pages
 
-- **Topics:** select the concepts you want to cover. Their source pages form the context.
-- **Pages:** open **Choose pages**, preview the thumbnails, and use the circles to select pages. You can also enter ranges such as `3–12, 24, 30–35`.
+Use **Pages** for direct control.
 
-Opening a preview does not select it. **Selected only** lets you check your selection before clicking **Done**. Question Studio remembers your Pages/Topics preference for your account in the same browser.
+- Open **Choose your pages**.
+- Select page circles or use **Select all**.
+- Enter ranges such as `1–12, 24, 38–45` and click **Add pages**.
+- Turn on **Selected only** to audit the final set.
+- Click a thumbnail to preview it; use the page circle as the separate selection control.
 
-## Read the meter
+The preview can switch between the original PDF page and **Text used for questions**. The extracted text is what the generation system can reliably use.
 
-The number beside **Context** estimates the tokens in your selected source text. Tokens are small pieces of text; the estimate uses roughly four characters per token. Equations, OCR formatting, and language can change the actual count.
+### Topics
 
-Pages shared by several selected topics count once. The bar uses a **20k-token scale**, with a suggested band from **3k to 10k**. It turns amber above 10k. Larger selections remain allowed, and the number continues to show the full estimate after the bar fills.
+Use **Topics** after the document reaches the **Mapped** stage.
 
-This is a selection guide, not the model's context-window usage or a quality score. Question Studio handles larger selections in smaller batches and gives each question relevant excerpts. The total selection is not sent in every prompt.
+- Search topic titles, summaries, and key terms.
+- Select **All**, **None**, or individual topics.
+- Open topic details to review page references, objectives, and suggested question types.
 
-## How much should you select?
+Pages shared by several topics count once in the source scope.
 
-For a focused run of **5–10 questions**, start with:
+## Read the context guidance
 
-| Selected source text | Guidance |
-| --- | --- |
-| Under 3k tokens | Often enough for a narrow topic. Add material only if it is needed. |
-| 3k–10k tokens | A practical starting range for a focused run. |
-| 10k–20k tokens | A broader scope; check that your question count can cover it. |
-| Over 20k tokens | Consider separate runs by topic or section. |
+Question Studio reports how many pages the agent will read. In the page picker, the context meter also shows a suggested band and warns when a selection is broad enough to risk shallow questions.
 
-These are starting points, not hard limits or guarantees. Page count alone is less useful: a dense textbook page can contain much more text than a slide.
+Use the meter as selection guidance. Quality still depends on source clarity, topic fit, and review. Slide pages, textbook pages, and OCR-heavy scans can contain very different amounts of usable text.
 
-## Check what the model can read
+For a focused run:
 
-Use **Text used for questions** in the page preview to inspect the extracted text. Original thumbnails help you recognize pages, but questions cannot reliably use visual details that are missing from the extraction.
+1. Start with the smallest section that contains the needed evidence.
+2. Match the requested question count to the number of distinct concepts.
+3. Split unrelated chapters or lecture sections into separate runs.
+4. Add pages only when a question truly needs them.
 
-Review the generated questions and their source citations before saving them. More context does not automatically produce better questions.
+## What happens when the source changes
+
+Question Studio ties a page selection to the indexed version of the document. If the source is reprocessed while you are selecting pages or generating questions, the app clears or rejects the stale selection. Reload the pages and start a new run so citations continue to match the source.
+
+## When Topics is unavailable
+
+While topic mapping is incomplete, Question Studio offers **pages you choose**. Completed extraction and indexing can still support a page-based run.
+
+Open the document's **Properties** panel in Content Library to check whether mapping is queued, active, complete, or failed.
+
+## Final source check
+
+Before saving a candidate, verify:
+
+- the cited page is in your selected scope
+- the quoted evidence supports the correct answer
+- every factual claim in the rationale is supported
+- visual details required by the question are present in extracted text
+
+## Related guides
+
+- [Content Library](/admin/content-library)
+- [Content processing pipeline](/admin/content-processing-pipeline)
+- [Question Studio](/admin/question-studio)
