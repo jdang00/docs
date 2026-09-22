@@ -38,6 +38,10 @@
               "students/classes-and-modules",
               "students/dashboard-and-recent-activity",
               "students/study-flow",
+              "students/quiz-dock-and-tools",
+              "students/calculator",
+              "students/private-question-notes",
+              "students/question-highlighting",
               "students/question-types-and-answering",
               "students/module-settings-and-shortcuts",
               "students/custom-tests",
@@ -63,6 +67,7 @@
             "group": "Contributors",
             "pages": [
               "contributors/question-authoring",
+              "contributors/manual-source-citations",
               "contributors/why-rationales-are-required",
               "contributors/reviewing-and-curating-questions",
               "contributors/question-media-and-attachments"
