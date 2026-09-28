@@ -1,24 +1,25 @@
 ---
 title: "History"
-description: "How LearnTerms grew from a focused term-study tool into a cohort-based study platform with curation, analytics, badges, and custom tests."
+description: "How LearnTerms grew from typed term recall into a cohort study platform with source-backed questions, curation, and progress tools."
 ---
 
 ## Why this history matters
 
 LearnTerms makes more sense when you know what it was built to solve first.
 
-The product did not start as a generic all-purpose study platform. It started as a highly practical response to a real class workflow, then expanded in layers:
+The product started as a response to a real class workflow, then expanded in layers:
 
 - first around term study
 - then around efficient high-yield filtering
 - then around AI-assisted authoring and curation
 - then around shared cohort structure, analytics, badges, and custom tests
+- and more recently around source-backed authoring, written answers, and clearer study feedback
 
 That progression explains why LearnTerms feels opinionated today.
 
 ## The short version
 
-LearnTerms began as a focused tool for mastering course terms. Over time, it grew into a cohort-based platform organized by **semester**, **class**, **module**, and **question**.
+LearnTerms began as a focused tool for mastering course terms. The [project README](https://github.com/jdang00/learnterms#why-learnterms) traces that need to weekly medical-terminology quizzes in NSUOCO's Introduction to Optometry course: long word lists, exact spelling, and combining forms. Over time, LearnTerms grew into a cohort-based platform organized by **semester**, **class**, **module**, and **question**.
 
 The current product reflects several big transitions:
 
@@ -26,10 +27,11 @@ The current product reflects several big transitions:
 2. from term lists to module-based question banks
 3. from manual authoring alone to AI-assisted generation plus human curation
 4. from simple practice loops to richer progress, badges, and custom tests
+5. from adding questions quickly to checking their evidence, explanations, and learner experience
 
 ## Early foundation: LearnTerms 1.0
 
-The archived **LearnTerms 1.0 Release** post dates the first major public version to **September 22, 2024** in the article body, while the blog index lists it on **September 23, 2024**.
+The archived **LearnTerms 1.0 Release** post dates the first major public version to **September 22, 2024** in the article body. The blog index and [GitHub release](https://github.com/jdang00/learnterms/releases/tag/releases) use **September 23, 2024**. The first repository commit was [September 3, 2024](https://github.com/jdang00/learnterms/commit/47b0f4e8e2f71d64ee2fe7fbe410f3bf78e57604).
 
 At that stage, the product was still much narrower than it is today. The focus was:
 
@@ -55,7 +57,7 @@ The archive index lists:
 - **LearnTerms v2 Beta** on **January 15, 2025**
 - **LearnTerms v2** on **February 28, 2025**
 
-The archived article pages themselves currently show **2024** dates in their headers, which appears to be a stale typo in the archived page content rather than the intended release timing.
+The [GitHub v2 release](https://github.com/jdang00/learnterms/releases/tag/v2) is dated **March 1, 2025 UTC**. The archived article pages currently show **2024** in their headers, which conflicts with the archive index and release record.
 
 Based on the archive index and the content of the posts, v2 marked a major shift:
 
@@ -119,6 +121,28 @@ The biggest visible shifts in that release window were:
 
 Custom tests are especially important in the product story. They show the platform moving beyond "study one module at a time" toward "build exam-style review from your own real class content."
 
+## April and May 2026: better editing and study support
+
+After v3, the next changes improved work people were already doing. [April's changelog entries](https://learnterms.com/changelog) cover richer question editing, clearer validation, matching-answer repairs, configurable class cards, and an updated grade calculator. [May's badge changes](https://github.com/jdang00/learnterms/pull/152) recognized larger quizzes and finals preparation, with a [new award display](https://github.com/jdang00/learnterms/pull/153).
+
+These updates matter because a shared question bank depends on dependable editing. A contributor needs to know why an answer or format is invalid before a question reaches students. Students need the study screen and its feedback to behave predictably across question types.
+
+## June and July 2026: organizing entry and generation
+
+[June's join-class work](https://github.com/jdang00/learnterms/pull/154) brought account setup into the class-joining flow. [Cohort-managed quick links](https://github.com/jdang00/learnterms/commit/fcf3fe9) gave staff a way to organize course resources. Question Studio's [workflow redesign](https://github.com/jdang00/learnterms/commit/c794770) changed how contributors set up generation.
+
+In July, Question Studio began [batching drafting turns](https://github.com/jdang00/learnterms/commit/b898238) and using [tool-first workers](https://github.com/jdang00/learnterms/commit/8810cf8) to retrieve and apply source material. These were steps toward a more inspectable document-to-question workflow; a generated draft still needed contributor review.
+
+## September 2026: evidence, feedback, and curation
+
+The [September changelog](https://learnterms.com/changelog) records the broadest post-v3 change to the current study and authoring flow. [Question Studio and Content Library updates](https://github.com/jdang00/learnterms/pull/155) brought document processing, source-page and topic mapping, evidence-backed candidates, editable drafts, and visible generation progress into one workflow. Contributors could also [attach source pages to manually edited questions](https://github.com/jdang00/learnterms/commit/4eee54d), making the answer easier to verify later.
+
+On the student side, the [quiz dock, module completion view, and persistent highlights](https://github.com/jdang00/learnterms/commit/630155c) made practice easier to resume and review. [Mastery became a passive result of spaced, clean recall](https://github.com/jdang00/learnterms/commit/e3493c1), separate from simply checking every question. [Private question notes and a calculator](https://github.com/jdang00/learnterms/commit/4eee54d) added tools beside the study flow. [Free-response checking and mobile quiz changes](https://github.com/jdang00/learnterms/commit/b843173) expanded how students could answer and receive feedback.
+
+For staff, [class progress](https://github.com/jdang00/learnterms/commit/ca52c07) and the [live curator dashboard](https://github.com/jdang00/learnterms/commit/1429b29) made participation, question coverage, flags, and module activity easier to inspect. Those signals help identify what deserves review; the question and its source still need a human check. Late-month `main` commits also added a [beta clinical exam-finding editor and learner display](https://github.com/jdang00/learnterms/commit/d01be80), followed by more [structured finding types](https://github.com/jdang00/learnterms/commit/3ea6984). The beta label matters: those commits document work in progress, not a new general-purpose clinical record.
+
+The newer guides follow these changes. [Students](/students/exam-week-study-plan) can use feedback, flags, and mastery to plan review. [Contributors](/contributors/pre-publish-question-checklist) can check source support and answerability before publishing. [Admins](/admin/reading-small-cohort-question-analytics) can interpret limited exposure before changing a question bank.
+
 ## What stayed consistent across all versions
 
 A lot changed, but a few ideas stayed surprisingly stable:
@@ -142,7 +166,8 @@ The external docs follow the current product shape, but the history explains why
 The most useful source threads are:
 
 - the archived blog under `src/lib/archive/blog`
-- the product changelog at `/changelog`
+- the [product changelog](https://learnterms.com/changelog)
+- the [GitHub change-history research record](https://github.com/jdang00/learnterms/blob/main/dev/GITHUB_CHANGE_HISTORY.md)
 - the in-app docs under `src/routes/docs`
 
 Together they show a clear arc: LearnTerms started narrow on purpose, then expanded without losing its bias toward focused study flow.
