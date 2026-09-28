@@ -1,6 +1,6 @@
 ---
 title: "Question types and answering"
-description: "Understand how LearnTerms handles multiple choice, fill in the blank, matching, checking, flags, and rationale."
+description: "Understand how LearnTerms handles multiple choice, fill in the blank, matching, free response, checking, flags, and rationale."
 ---
 
 ## Why this matters
@@ -17,14 +17,9 @@ LearnTerms currently supports these core question types in the shared model:
 - `true_false`
 - `fill_in_the_blank`
 - `matching`
+- `free_response`
 
-In practice, the student-facing custom test builder currently centers on:
-
-- `multiple_choice`
-- `fill_in_the_blank`
-- `matching`
-
-That is an important distinction. The full question model is a little broader than every student-facing builder surface.
+Free response is available in module practice. Custom tests currently exclude it.
 
 ## Multiple choice
 
@@ -79,13 +74,19 @@ Matching is easy to underestimate. It feels lighter than a long multiple choice 
 - leave the ambiguous pairs for the end
 - use the remaining pool to narrow the hard matches
 
+## Free response
+
+Free response asks you to explain an idea in your own words during module practice. Read the full prompt, identify the requested points, and write a direct answer. A brief response can be enough when it covers the main idea and the details the question asks for. The 1,500-word limit is a maximum, not a target.
+
+Use **Submit** to receive feedback. LearnTerms grades meaning rather than formatting or exact wording. If your answer needs revision, use the feedback to add or correct the missing reasoning, then submit again. **More** shows a detailed comparison with the ground truth. You can also use **Reveal answer** to review it without submitting.
+
 ## What happens when you answer
 
 Across formats, the study flow usually follows the same pattern:
 
 1. you make a selection or response
 2. LearnTerms saves your progress state
-3. you use **Check**
+3. you use **Check** or **Submit**, depending on the question type
 4. the interface shifts from answer mode to feedback mode
 
 That feedback mode is a major part of the study flow. The app is designed to keep the correction loop tight so you can learn while the reasoning is still fresh.
@@ -115,7 +116,7 @@ Students often misuse flags by treating them as a list of only wrong answers. Th
 
 ## Rationales are where a lot of the learning happens
 
-When a question has a rationale, LearnTerms can reveal it in the sidebar or review flow. Rationales matter because they turn the app from a pure checking tool into a teaching tool.
+LearnTerms can reveal the rationale in the sidebar or review flow. Rationales matter because they turn the app from a pure checking tool into a teaching tool.
 
 A strong rationale should help you answer the next similar question faster and more accurately.
 

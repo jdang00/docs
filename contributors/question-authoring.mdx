@@ -5,7 +5,7 @@ description: "How to write, structure, and attach high-quality questions in Lear
 
 ## What a question record contains
 
-At the data-model level, a LearnTerms question includes:
+A LearnTerms question includes:
 
 - `moduleId`
 - `order`
@@ -13,7 +13,7 @@ At the data-model level, a LearnTerms question includes:
 - `stem`
 - `options`
 - `correctAnswers`
-- optional `explanation`
+- a required rationale
 - `aiGenerated`
 - `status`
 - optional author metadata
@@ -28,6 +28,7 @@ The shared type definitions currently include:
 - `true_false`
 - `fill_in_the_blank`
 - `matching`
+- `free_response`
 
 Not every UI surface exposes every type equally, but contributors should still understand the full supported model.
 
@@ -52,17 +53,17 @@ For contributors, that means:
 - answer IDs matter, not just displayed order
 - matching questions require more care because the evaluation model is more complex than a simple single-answer check
 
-## Explanations
+## Rationales and ground truth
 
-The explanation field is optional in the schema, but in practice it is highly valuable.
+The **Rationale** field is required when you save or publish a question. For free response, it also supplies the ground truth used to grade a student's answer.
 
-Good explanations should:
+Good rationales should:
 
 - explain why the correct answer is correct
 - explain why likely distractors are wrong when helpful
 - reinforce the module concept rather than restating the stem
 
-If LearnTerms is going to be more useful than rote memorization, explanations are one of the main reasons.
+See [Why rationales are required](/contributors/why-rationales-are-required) and [Writing free-response questions](/contributors/writing-free-response-questions) for guidance on each format.
 
 ## AI-generated vs manually authored
 
@@ -104,5 +105,10 @@ Contributors should treat question writing as curation, not just entry:
 1. verify the source
 2. write clearly
 3. attach media only when it improves understanding
-4. include explanation when possible
+4. write a rationale that explains the answer
 5. place the question in the correct module
+
+## Related guides
+
+- [Writing free-response questions](/contributors/writing-free-response-questions)
+- [Manual source citations](/contributors/manual-source-citations)
