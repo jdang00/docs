@@ -38,6 +38,8 @@
               "students/classes-and-modules",
               "students/dashboard-and-recent-activity",
               "students/study-flow",
+              "students/understanding-progress-and-mastery",
+              "students/after-a-missed-question",
               "students/quiz-dock-and-tools",
               "students/calculator",
               "students/private-question-notes",
@@ -46,6 +48,7 @@
               "students/module-settings-and-shortcuts",
               "students/custom-tests",
               "students/test-results-and-review",
+              "students/exam-week-study-plan",
               "students/badges-and-cohort-board"
             ]
           },
@@ -60,17 +63,23 @@
               "admin/source-context",
               "admin/question-studio-reviewing-runs",
               "admin/class-progress-and-role-management",
-              "admin/reading-progress-analytics"
+              "admin/reading-progress-analytics",
+              "admin/reading-small-cohort-question-analytics"
             ]
           },
           {
             "group": "Contributors",
             "pages": [
               "contributors/question-authoring",
+              "contributors/choosing-question-types",
+              "contributors/writing-clinical-case-questions",
               "contributors/writing-free-response-questions",
+              "contributors/alternate-valid-answers",
               "contributors/manual-source-citations",
               "contributors/why-rationales-are-required",
               "contributors/reviewing-and-curating-questions",
+              "contributors/pre-publish-question-checklist",
+              "contributors/updating-questions-after-source-changes",
               "contributors/question-media-and-attachments"
             ]
           },

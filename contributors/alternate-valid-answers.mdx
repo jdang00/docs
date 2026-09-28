@@ -1,0 +1,40 @@
+---
+title: "Handling alternate valid answers"
+description: "Define essential ideas, acceptable equivalents, and boundaries for fair free-response grading."
+---
+
+Students may know the concept and use different words. Decide what meaning must be present before you write the free-response ground truth. In LearnTerms, the required **Rationale** is the grader's reference answer. The **Acceptance** setting controls how much of that reference a response must cover.
+
+## Separate essentials from examples
+
+Write a short list before entering the rationale:
+
+| Category | What to record | Example shape |
+| --- | --- | --- |
+| Essential conclusion | The decision or concept the student must identify | “Identify interpretation X.” |
+| Essential support | Findings or reasoning explicitly requested in the stem | “Use one of findings A or B.” |
+| Acceptable equivalent | Synonyms, alternate names, or reasoning paths that reach the same conclusion | “A description of the mechanism is acceptable in place of its label.” |
+| Optional enrichment | Helpful detail that improves the explanation but is not required | “A second supporting finding.” |
+| Contradiction | A claim that changes the meaning or makes the answer unsafe | “The response asserts the opposite interpretation.” |
+
+Use actual course terms and source evidence in the saved question. The table is a drafting method, not a separate rubric field in the editor.
+
+## Align the prompt and ground truth
+
+If the stem asks for a diagnosis and one supporting finding, a sound answer with either of two source-supported findings should pass. Write both valid routes into the rationale. If a particular finding is essential, name it in the stem. Do not make students infer an unstated list of required phrases from a longer model answer.
+
+The grader is instructed to judge meaning and accept accurate synonyms and equivalent explanations. It ignores formatting, spelling, grammar, and style. A central contradiction or unrelated answer can still fail. This makes the quality of your reference answer especially important: it should clearly distinguish a valid paraphrase from a different conclusion.
+
+## Choose acceptance deliberately
+
+- **Lenient** accepts the main idea with minor omissions or imprecise wording.
+- **Balanced** requires the key points while allowing equivalent wording.
+- **Strict** requires every requested detail and precise reasoning.
+
+Choose **Strict** only when the prompt explicitly requests every detail you intend to require. A precise clinical term can matter, but do not use strictness to compensate for an ambiguous stem.
+
+## Test boundary responses
+
+Before publishing, write three short responses: a complete answer in plain language, a valid answer using an alternate term, and an answer that sounds similar but reaches the wrong conclusion. Submit them in the learner flow. Compare **Feedback** and **More** with the ground truth. If a valid response is rejected or a contradictory one passes, revise the stem or rationale and retest.
+
+See [Writing free-response questions](/contributors/writing-free-response-questions) for prompt length and the full learner review flow.
